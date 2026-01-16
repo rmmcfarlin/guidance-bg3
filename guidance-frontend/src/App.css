@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --color-charcoal-300: #333333;
+  --color-charcoal-500: #242424;
+  --color-ivory-300: #F0EDE5;
+  --color-leather-100: #48352A;
+  --color-leather-300: #3A2A22;
+  --color-leather-500: #2b2019;
+  --color-leather-700: #1D1511;
+  --color-parchment-300: #F1E9DA;
+  --color-parchment-500: #EDE4D3;
+}
+
+.karla {
+  font-family: "Karla", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+* {
+  font-family: "Karla";
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100vw;
+  min-height: 100vh;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+
+/* App Wrapper */
+
+#sidebarMain, #appMain {
+  transition: width 0.3s ease;
+}
