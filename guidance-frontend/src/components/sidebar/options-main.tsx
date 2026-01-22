@@ -1,4 +1,6 @@
 import PrismIcon from '../../assets/prism.svg?react'
+import BookIcon from '../../assets/ui-icons/book.svg?react'
+import SearchIcon from '../../assets/ui-icons/search.svg?react'
 
 interface SidebarOptionProps {
     sidebarExpanded: boolean
@@ -17,12 +19,12 @@ export const SidebarOptions = ({ sidebarExpanded }: SidebarOptionProps ) => {
                 <span>Generator</span>
             </button>
             <button className={optionButtonClass}>
-                <PrismIcon className={optionIconClass} />
-                <span>Library</span>
+                <BookIcon className={optionIconClass} />
+                <span>Archives</span>
             </button>
             <button className={optionButtonClass}>
-                <PrismIcon className={optionIconClass} />
-                <span>Profile</span>
+                <SearchIcon className="w-5 stroke-parchment-300 stroke-1 mr-3" />
+                <span>Wiki</span>
             </button>
         </div>
     )

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import HamburgerIcon from "../../assets/ui-icons/hamburger-icon.svg?react"
 import { SidebarOptions } from './options-main.tsx'
+import { ProfileFooter } from './profile-footer.tsx'
 import { type ThemeContextValue } from "../../context-providers/theme-provider.tsx"
 
 interface SidebarProps {
@@ -26,7 +27,7 @@ export const Sidebar = ({ themeProps }: SidebarProps) => {
 
     const sidebarClasses: SidebarClasses = {
         sbBase: "h-screen absolute left-0 lg:relative flex-none z-10 flex",
-        sbExpanded: "w-[80vw] md:w-[15rem] bg-leather-500",
+        sbExpanded: "w-[80vw] md:w-[15rem] bg-leather-500 flex flex-col",
         sbCollapsed: "w-[0rem]",
         hamburgerBase: "w-[2.25rem] absolute top-3",
         hamburgerExpanded: "stroke-parchment-500 right-3",
@@ -46,6 +47,7 @@ export const Sidebar = ({ themeProps }: SidebarProps) => {
                 <HamburgerIcon className={`${sidebarClasses.hamburgerBase} 
                     ${sidebarExpanded ? sidebarClasses.hamburgerExpanded : sidebarClasses.hamburgerCollapsed}`} onClick={() => handleSbExpand()} />
                 <SidebarOptions sidebarExpanded={sidebarExpanded} />
+                <ProfileFooter sidebarExpanded={sidebarExpanded} />
             </div>
     )
 }
