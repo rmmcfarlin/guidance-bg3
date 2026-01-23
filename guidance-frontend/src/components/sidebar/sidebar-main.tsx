@@ -3,9 +3,11 @@ import HamburgerIcon from "../../assets/ui-icons/hamburger-icon.svg?react"
 import { SidebarOptions } from './options-main.tsx'
 import { ProfileFooter } from './profile-footer.tsx'
 import { type ThemeContextValue } from "../../context-providers/theme-provider.tsx"
+import { type SettingsProps } from '../app-wrapper.tsx'
 
 interface SidebarProps {
-    themeProps: ThemeContextValue
+    themeProps: ThemeContextValue,
+    settingsProps: SettingsProps
 }
 
 interface SidebarClasses {
@@ -21,7 +23,7 @@ interface SidebarState {
     sidebarExpanded: boolean
 }
 
-export const Sidebar = ({ themeProps }: SidebarProps) => {
+export const Sidebar = ({ themeProps, settingsProps }: SidebarProps) => {
 
     const [sidebarExpanded, setSidebarExpanded] = useState<boolean>(false)
 
@@ -47,7 +49,10 @@ export const Sidebar = ({ themeProps }: SidebarProps) => {
                 <HamburgerIcon className={`${sidebarClasses.hamburgerBase} 
                     ${sidebarExpanded ? sidebarClasses.hamburgerExpanded : sidebarClasses.hamburgerCollapsed}`} onClick={() => handleSbExpand()} />
                 <SidebarOptions sidebarExpanded={sidebarExpanded} />
-                <ProfileFooter sidebarExpanded={sidebarExpanded} />
+                <ProfileFooter 
+                    sidebarExpanded={sidebarExpanded}
+                    settingsProps={settingsProps} 
+                    />
             </div>
     )
 }

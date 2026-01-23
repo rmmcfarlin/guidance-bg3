@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { type ThemeContextValue } from "../context-providers/theme-provider.tsx"
+import { type SettingsProps } from './app-wrapper.tsx'
 import { ClassGeneratorMain } from './class-generators/class-generator-main'
+import { SettingsMenu } from './sidebar/settings-menu-main.tsx'
 
 interface AppMainProps {
     themeProps: ThemeContextValue
+    settingsProps: SettingsProps
 }
 
-export const AppMain = ({ themeProps }: AppMainProps) => {
+export const AppMain = ({ themeProps, settingsProps }: AppMainProps) => {
 
     const [appContent, setAppContent] = useState("classGenerator")
 
@@ -17,8 +20,11 @@ export const AppMain = ({ themeProps }: AppMainProps) => {
     }
 
     return(
-        <div id="appMain" className="w-full flex justify-center items-center flex-0 lg:flex-1 lg:min-w-0 lg:overflow-auto mr-auto ml-auto">
+        <div id="appMain" className="w-full relative flex justify-center items-center flex-0 lg:flex-1 lg:min-w-0 lg:overflow-auto mr-auto ml-auto">
             {renderContent()}
+            <SettingsMenu
+                settingsProps={settingsProps}
+                />
         </div>
     )
 }
