@@ -35,12 +35,12 @@ export const AppWrapper = ({}) => {
         setSettingsTab
     }
 
-    const {mainTheme, accentTheme, toggleAccentTheme, toggleMainTheme } = useTheme()
+    const {mainTheme, accentTheme, setMainTheme, setAccentTheme } = useTheme()
     const themeProps = {
         mainTheme,
         accentTheme,
-        toggleAccentTheme,
-        toggleMainTheme
+        setMainTheme,
+        setAccentTheme
     }
 
     return(

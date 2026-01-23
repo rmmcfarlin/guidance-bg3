@@ -1,29 +1,25 @@
 import { createContext, useContext, useState } from 'react';
 import { type ReactNode } from 'react';
 
-type MainTheme = "light" | "dark"
-type AccentTheme = "wizard" | "warlock" | "cleric" | "druid" | "sorcerer"
+export type MainTheme = "Light" | "Dark"
+export type AccentTheme = "Wizard" | "Warlock" | "Cleric" | "Druid" | "Sorcerer"
 
 export interface ThemeContextValue {
     mainTheme: MainTheme
     accentTheme: AccentTheme
-    toggleMainTheme: () => void
-    toggleAccentTheme: (theme: AccentTheme) => void
+    setMainTheme: (theme: MainTheme) => void
+    setAccentTheme: (theme: AccentTheme) => void
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
-    const [mainTheme, setMainTheme] = useState<MainTheme>("light")
-    const [accentTheme, setAccentTheme] = useState<AccentTheme>('wizard')
-
-
-    const toggleMainTheme = () => setMainTheme( prev => (prev === 'light' ? 'dark' : 'light'))
-    const toggleAccentTheme = (theme: AccentTheme) => setAccentTheme(theme)
+    const [mainTheme, setMainTheme] = useState<MainTheme>("Light")
+    const [accentTheme, setAccentTheme] = useState<AccentTheme>('Cleric')
 
     return(
-        <ThemeContext.Provider value={{mainTheme, toggleMainTheme, accentTheme, toggleAccentTheme }}>
+        <ThemeContext.Provider value={{mainTheme, setMainTheme, accentTheme, setAccentTheme }}>
             {children}
         </ThemeContext.Provider>
     )

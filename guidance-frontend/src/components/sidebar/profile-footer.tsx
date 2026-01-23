@@ -1,6 +1,8 @@
 import ProfilePlaceholder from '../../assets/ui-icons/profile-placeholder.png'
 import DotsIcon from '../../assets/ui-icons/dots-horizontal.svg?react'
-import { OptionDropdown } from '../ui-components/option-dropdown'
+import ProfileSVG from '../../assets/ui-icons/profile.svg?react'
+import SettingsSVG from '../../assets/ui-icons/settings.svg?react'
+import LogoutSVG from '../../assets/ui-icons/logout.svg?react'
 import { useState } from 'react'
 import { type SettingsProps, type SettingsTabOption } from '../app-wrapper'
 
@@ -15,16 +17,12 @@ export const ProfileFooter = ({sidebarExpanded, settingsProps}: ProfileFooterPro
 
     const { setSettingsTab, setShowSettingsMenu } = settingsProps
 
-    const footerExpanded: string = "flex p-5 hover:bg-leather-100 w-full items-center relative"
+    const footerExpanded: string = "flex p-5 w-full items-center relative"
     const footerCollapsed: string = "hidden"
 
-    const profileMenuOptions: SettingsTabOption[] = [
-        "Profile",
-        "Settings"
-    ]
-
     const profileMenuClass: string = `${showProfileDropdown ? '' : 'hidden'} w-full round-xl flex flex-col p-[1rem] absolute left-0 bottom-[90%] bg-leather-300`
-    const dropdownButtonClass: string = "w-full text-parchment-300 bg-leather-300 hover:bg-leather-100 p-3 rounded-xl"
+    const dropdownButtonClass: string = "w-full flex items-center text-parchment-300 bg-leather-300 hover:bg-leather-100 p-3 rounded-xl"
+    const dropdownButtonIconClass: string = "size-[15px] fill-parchment-300 stroke-parchement-300 mr-3"
 
     const handleSettingsMenuSelection = (option: SettingsTabOption) => {
         setSettingsTab(option)
@@ -41,13 +39,21 @@ export const ProfileFooter = ({sidebarExpanded, settingsProps}: ProfileFooterPro
             <img src={ProfilePlaceholder} className="w-[30px] rounded-[100%] mr-4"></img>
             <span className="text-parchment-300">Ryan McFarlin</span>
             <DotsIcon className="w-[17px] fill-parchment-300 ml-auto" onClick={() => handleProfileDropdown()} />
-            <OptionDropdown
-                options={profileMenuOptions}
-                containerClass={profileMenuClass}
-                buttonClass={dropdownButtonClass}
-                setValue={handleSettingsMenuSelection}
-                />
-            {/* <span className={dropdownButtonClass}>Logout</span> */}
+
+            <div className={profileMenuClass}>
+                <button className={dropdownButtonClass} onClick={() => handleSettingsMenuSelection("Profile")}>
+                    <ProfileSVG className={dropdownButtonIconClass}/>
+                    <span className="text-parchment-300">Profile</span>
+                </button>
+                <button className={dropdownButtonClass} onClick={() => handleSettingsMenuSelection("Settings")}>
+                    <SettingsSVG className={dropdownButtonIconClass} />
+                    <span className="text-parchment-300">Settings</span>
+                </button>
+                <button className={dropdownButtonClass}>
+                    <LogoutSVG className={dropdownButtonIconClass} />
+                    <span className="text-parchment-300">Logout</span>
+                </button>
+            </div>
         </div>
     )
 }
