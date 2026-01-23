@@ -1,12 +1,12 @@
 
-interface OptionDropdownProps {
-    options: string[],
+interface OptionDropdownProps <Option extends string> {
+    options: Option[],
     containerClass: string,
     buttonClass: string,
-    setValue: (option: string) => void
+    setValue: (option: Option) => void
 }
 
-export const OptionDropdown = ({options, containerClass, buttonClass, setValue}: OptionDropdownProps) => {
+export const OptionDropdown = <Option extends string>({options, containerClass, buttonClass, setValue}: OptionDropdownProps<Option>) => {
 
     return(
         <div className={containerClass}>

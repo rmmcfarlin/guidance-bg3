@@ -3,7 +3,7 @@ import HamburgerIcon from "../../assets/ui-icons/hamburger-icon.svg?react"
 import { SidebarOptions } from './options-main.tsx'
 import { ProfileFooter } from './profile-footer.tsx'
 import { type ThemeContextValue } from "../../context-providers/theme-provider.tsx"
-import { type SettingsProps } from '../app-wrapper.tsx'
+import { type SettingsProps, type SettingsTabOption } from '../app-wrapper.tsx'
 
 interface SidebarProps {
     themeProps: ThemeContextValue,
@@ -19,10 +19,6 @@ interface SidebarClasses {
     hamburgerCollapsed: string
 }
 
-interface SidebarState {
-    sidebarExpanded: boolean
-}
-
 export const Sidebar = ({ themeProps, settingsProps }: SidebarProps) => {
 
     const [sidebarExpanded, setSidebarExpanded] = useState<boolean>(false)
@@ -34,10 +30,6 @@ export const Sidebar = ({ themeProps, settingsProps }: SidebarProps) => {
         hamburgerBase: "w-[2.25rem] absolute top-3",
         hamburgerExpanded: "stroke-parchment-500 right-3",
         hamburgerCollapsed: "stroke-charcoal-500 left-3"
-    }
-
-    const sidebarState: SidebarState = {
-        sidebarExpanded
     }
 
     const handleSbExpand: () => void = () => {

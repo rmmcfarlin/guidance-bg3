@@ -10,20 +10,22 @@ export interface ThemeProps {
     themeProps: ThemeContextValue
 }
 
+export type SettingsTabOption = "Profile" | "Settings"
+
 export interface SettingsProps {
     settingsMenuOption: string,
     setSettingsMenuOption: (option: string) => void,
     showSettingsMenu: boolean,
     setShowSettingsMenu: (bool: boolean) => void,
-    settingsTab: string,
-    setSettingsTab: (option: string) => void,
+    settingsTab: SettingsTabOption,
+    setSettingsTab: (option: SettingsTabOption) => void,
 }
  
 export const AppWrapper = ({}) => {
     
     const [settingsMenuOption, setSettingsMenuOption] = useState<string>('')
     const [showSettingsMenu, setShowSettingsMenu] = useState<boolean>(false)
-    const [settingsTab, setSettingsTab] = useState<string>('')
+    const [settingsTab, setSettingsTab] = useState<SettingsTabOption>('Profile')
     const settingsProps = {
         settingsMenuOption,
         setSettingsMenuOption,
