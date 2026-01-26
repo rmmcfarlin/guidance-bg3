@@ -108,7 +108,8 @@
   --color-background-main: var(--color-background-main);
   --color-background-sidebar-main: var(--color-background-sidebar-main);
   --color-background-sidebar-secondary: var( --color-background-sidebar-secondary);
-
+  --color-background-generator-primary: var(--color-background-generator-primary);
+  --color-background-generator-secondary: var( --color-background-generator-secondary);
   --color-sidebar-button-hover: var(--color-sidebar-button-hover);
 
   --color-button-primary: var(--color-button-primary:);
@@ -116,6 +117,7 @@
   --color-button-text: var(--color-button-text);
   --color-button-hover: var(--color-button-hover);
   --color-button-active: var(--color-button-active);
+  --color-tab-button-active: var(--color-tab-button-active);
 }
 
 /* Main Themes */
@@ -130,6 +132,8 @@
   --color-background-main: var(--parchment-100);
   --color-background-sidebar-main: var(--sand-300);
   --color-background-sidebar-secondary: var(--parchment-500);
+  --color-background-generator-primary: var(--parchment-500);
+  --color-background-generator-secondary: var(--sand-600)
 
   /* Active States */
   --color-sidebar-button-hover: var(--parchment-100);
@@ -146,7 +150,9 @@
   --color-background-main: var(--charcoal-700);
   --color-background-sidebar-main: var(--charcoal-500);
   --color-background-sidebar-secondary: var(--charcoal-800);
-
+  --color-background-generator-primary: var(--charcoal-500);
+  --color-background-generator-secondary: var(--charcoal-500);
+  
   /* Active States */
   --color-sidebar-button-hover: var(--charcoal-700);
 }

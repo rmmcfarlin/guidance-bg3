@@ -1,13 +1,15 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { OptionDropdown } from "../ui-components/option-dropdown"
 import { type MainTheme, type AccentTheme } from "../../context-providers/theme-provider"
 import { useTheme } from "../../context-providers/theme-provider"
 import DownArrowSVG from '../../assets/ui-icons/down-arrow.svg?react'
+import { useClickOutside } from '../../hooks/use-click-outside'
 
 export const SettingsTab = ({}) => {
 
     const {mainTheme, accentTheme, setMainTheme, setAccentTheme } = useTheme()
     const [selectedDropdown, setSetlectedDropdown] = useState<string>('')
+    const ref = useRef<HTMLDivElement>(null)
 
     const downArrowClass: string = "w-[20px] fill-text-primary ml-2"
     const dropdownContainerClass: string = `flex flex-col items-center pt-3 pb-1 rounded-xl bg-background-sidebar-secondary w-[150%] z-10 absolute top-7 right-0`
@@ -41,6 +43,8 @@ export const SettingsTab = ({}) => {
             setSetlectedDropdown(id)
         }
     }
+
+    useClickOutside(ref, () => setSetlectedDropdown(''))
 
     const getDropdownClass = (id: string) => {
         if (id == selectedDropdown) {
@@ -86,7 +90,7 @@ export const SettingsTab = ({}) => {
                         options={accentThemeOptions}
                         containerClass={getDropdownClass('accentTheme')}
                         buttonClass={dropdownButtonClass}
-                        setValue={handleSetAccentTheme} 
+                        setValue={handleSetAccentTheme}
                         />
                 </div>
             </div>

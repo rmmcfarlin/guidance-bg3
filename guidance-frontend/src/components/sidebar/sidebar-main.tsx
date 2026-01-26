@@ -4,7 +4,6 @@ import { SidebarOptions } from './options-main.tsx'
 import { ProfileFooter } from './profile-footer.tsx'
 import { type ThemeContextValue } from "../../context-providers/theme-provider.tsx"
 import { type SettingsProps } from '../app-wrapper.tsx'
-import { useClickOutside } from '../../hooks/use-click-outside.tsx'
 
 interface SidebarProps {
     themeProps: ThemeContextValue,
@@ -37,8 +36,6 @@ export const Sidebar = ({ settingsProps }: SidebarProps) => {
     const handleSbExpand: () => void = () => {
         setSidebarExpanded(!sidebarExpanded)
     }
-
-    useClickOutside(ref, () => setSidebarExpanded(false))
 
     return(
             <div ref={ref} id="sidebarMain" className={`${sidebarClasses.sbBase} ${sidebarExpanded ? sidebarClasses.sbExpanded : sidebarClasses.sbCollapsed}`}>
