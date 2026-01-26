@@ -1,16 +1,210 @@
 @import "tailwindcss";
 
-@theme {
-  --color-charcoal-300: #333333;
-  --color-charcoal-500: #242424;
-  --color-ivory-300: #F0EDE5;
-  --color-leather-100: #48352A;
-  --color-leather-300: #3A2A22;
-  --color-leather-500: #2b2019;
-  --color-leather-700: #1D1511;
-  --color-parchment-300: #F1E9DA;
-  --color-parchment-500: #EDE4D3;
+
+:root {
+
+  /* charcoal */
+  --charcoal-100: #f2f2f2;
+  --charcoal-200: #d9d9d9;
+  --charcoal-300: #bfbfbf;
+  --charcoal-400: #7a7a7a;
+  --charcoal-500: #333333;
+  --charcoal-600: #2b2b2b;
+  --charcoal-700: #242424;
+  --charcoal-800: #1b1b1b;
+  --charcoal-900: #121212;
+
+  /* ivory */
+  --ivory-100: #F7F5F0;
+  --ivory-300: #F0EDE5;
+  --ivory-500: #E8E4DA;
+  --color-ivory-700: #D8D3C8;
+
+  /* leather */
+  --leather-100: #48352A;
+  --leather-300: #3A2A22;
+  --leather-500: #2b2019;
+  --leather-700: #1D1511;
+
+  /* parchment */
+  --parchment-100: #F8F3E8;
+  --parchment-300: #F1E9DA;
+  --parchment-500: #EDE4D3;
+  --parchment-700: #DCCFB8;
+  --parchment-900: #C9BCA4;
+
+  /* sand */
+  --sand-100: #F6F0E4;
+  --sand-200: #EEE4D2;
+  --sand-300: #E3D6BE;
+  --sand-400: #D2C3A6;
+  --sand-500: #C1AF8F;
+  --sand-600: #AE9B7C;
+  --sand-700: #947F63;
+  --sand-800: #7A654E;
+  --sand-900: #5E4C3A;
+
+
+  /* Cleric */
+  --cleric-accent-base: #C9A24D;        /* warm gold, primary identity */
+  --cleric-accent-contrast: #1D1511;    /* near-black leather for text/icons */
+  --cleric-accent-hover: #D8B45E;       /* brighter, sunlit gold */
+  --cleric-accent-active: #B08A3A;      /* pressed, aged gold */
+  --cleric-accent-border: #E2C97A;      /* soft gilded edge */
+  --cleric-accent-ring: #F0DFA6;        /* luminous focus ring */
+  --cleric-accent-muted: #EDE1C2;       /* subtle highlights, chips */
+  --cleric-accent-muted-hover: #E2D3A9;
+
+  /* Druid */
+  --druid-accent-base: #4F6F52;        /* deep forest green */
+  --druid-accent-contrast: #F1E9DA;    /* parchment — clean, natural contrast */
+  --druid-accent-hover: #5F8362;       /* fresher leaf green */
+  --druid-accent-active: #3E5A42;      /* shaded forest floor */
+  --druid-accent-border: #8FAE90;      /* desaturated leaf edge */
+  --druid-accent-ring: #B7CFAF;        /* soft, natural focus glow */
+  --druid-accent-muted: #D9E4D2;       /* pale sage highlight */
+  --druid-accent-muted-hover: #C8D8BF;
+  --druid-accent-wood: #6A4E3B; 
+
+  /* Sorcerer */
+  --sorcerer-accent-base: #3A80E6;        /* charged storm blue */
+  --sorcerer-accent-contrast: #F5FAFF;   /* icy white for text/icons */
+  --sorcerer-accent-hover: #5FA2F0;       /* lightning flare */
+  --sorcerer-accent-active: #2C6AC0;      /* deep thundercloud */
+  --sorcerer-accent-border: #8DBAED;      /* pale electric edge */
+  --sorcerer-accent-ring: #BEE8FF;        /* spell focus glow */
+  --sorcerer-accent-muted: #C8DFF3;       /* frosted mist */
+  --sorcerer-accent-muted-hover: #B4D1E9; /* condensed frost */
+
+  /* Warlock */
+  --warlock-accent-base: #8E2A1F;        /* deep hellfire red */
+  --warlock-accent-contrast: #F1E9DA;    /* parchment contrast for text/icons */
+  --warlock-accent-hover: #B33A2C;       /* flaring ember */
+  --warlock-accent-active: #6F1D15;      /* pressed bloodfire */
+  --warlock-accent-border: #D06A3A;      /* glowing brimstone edge */
+  --warlock-accent-ring: #F2A766;        /* infernal aura glow */
+  --warlock-accent-muted: #E7C1A3;       /* ash-tinted ember */
+  --warlock-accent-muted-hover: #D6A982; /* cooled lava */
+
+  /* Wizard */
+  --wizard-accent-base: #5A3E8C;        /* royal arcane purple */
+  --wizard-accent-contrast: #F1E9DA;    /* parchment contrast */
+  --wizard-accent-hover: #6F56A8;       /* energized spell ink */
+  --wizard-accent-active: #46306E;      /* pressed velvet */
+  --wizard-accent-border: #9B86C8;      /* soft mana edge */
+  --wizard-accent-ring: #C9B8F0;        /* starlit focus glow */
+  --wizard-accent-muted: #E1DAF0;       /* pale arcane wash */
+  --wizard-accent-muted-hover: #D1C6E8; /* deeper parchment lavender */
+
 }
+
+
+
+@theme {
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+
+  --color-background-main: var(--color-background-main);
+  --color-background-sidebar-main: var(--color-background-sidebar-main);
+  --color-background-sidebar-secondary: var( --color-background-sidebar-secondary);
+
+  --color-sidebar-button-hover: var(--color-sidebar-button-hover);
+
+  --color-button-primary: var(--color-button-primary:);
+  --color-button-secondary: var(--color-button-secondary);
+  --color-button-text: var(--color-button-text);
+  --color-button-hover: var(--color-button-hover);
+  --color-button-active: var(--color-button-active);
+}
+
+/* Main Themes */
+
+[data-main-theme="light"] {
+  /* Text */
+  --color-text-primary: var(--leather-500);
+  --color-text-secondary: var(--leather-300);
+
+  /* Background Colors */
+
+  --color-background-main: var(--parchment-100);
+  --color-background-sidebar-main: var(--sand-300);
+  --color-background-sidebar-secondary: var(--parchment-500);
+
+  /* Active States */
+  --color-sidebar-button-hover: var(--parchment-100);
+
+}
+
+[data-main-theme="dark"] {
+  /* Text */
+  --color-text-primary: var(--parchment-300);
+  --color-text-secondary: var(--parchment-500);
+
+  /* Background Colors */
+
+  --color-background-main: var(--charcoal-700);
+  --color-background-sidebar-main: var(--charcoal-500);
+  --color-background-sidebar-secondary: var(--charcoal-800);
+
+  /* Active States */
+  --color-sidebar-button-hover: var(--charcoal-700);
+}
+
+
+/* Accent Themes */
+
+[data-accent-theme="cleric"] {
+
+  --color-button-primary: var(--cleric-accent-base);
+  --color-button-secondary: var(--cleric-accent-muted);
+  --color-button-text: var(--cleric-accent-contrast);
+  --color-button-hover: var(--cleric-accent-hover);
+  --color-button-active: var(--cleric-accent-active);
+
+}
+
+[data-accent-theme="druid"] {
+
+  --color-button-primary: var(--druid-accent-base);
+  --color-button-secondary: var(--druid-accent-muted);
+  --color-button-text: var(--druid-accent-contrast);
+  --color-button-hover: var(--druid-accent-hover);
+  --color-button-active: var(--druid-accent-active);
+
+}
+
+[data-accent-theme="sorcerer"] {
+
+  --color-button-primary: var(--sorcerer-accent-base);
+  --color-button-secondary: var(--sorcerer-accent-muted);
+  --color-button-text: var(--sorcerer-accent-contrast);
+  --color-button-hover: var(--sorcerer-accent-hover);
+  --color-button-active: var(--sorcerer-accent-active);
+
+}
+
+[data-accent-theme="warlock"] {
+
+  --color-button-primary: var(--warlock-accent-base);
+  --color-button-secondary: var(--warlock-accent-muted);
+  --color-button-text: var(--warlock-accent-contrast);
+  --color-button-hover: var(--warlock-accent-hover);
+  --color-button-active: var(--warlock-accent-active);
+
+}
+
+[data-accent-theme="wizard"] {
+
+  --color-button-primary: var(--wizard-accent-base);
+  --color-button-secondary: var(--wizard-accent-muted);
+  --color-button-text: var(--wizard-accent-contrast);
+  --color-button-hover: var(--wizard-accent-hover);
+  --color-button-active: var(--wizard-accent-active);
+
+}
+
+
 
 .karla {
   font-family: "Karla", sans-serif;

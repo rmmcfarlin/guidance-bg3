@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTheme } from '../../context-providers/theme-provider.tsx'
 import HamburgerIcon from "../../assets/ui-icons/hamburger-icon.svg?react"
 import { SidebarOptions } from './options-main.tsx'
 import { ProfileFooter } from './profile-footer.tsx'
@@ -25,11 +26,11 @@ export const Sidebar = ({ themeProps, settingsProps }: SidebarProps) => {
 
     const sidebarClasses: SidebarClasses = {
         sbBase: "h-screen absolute left-0 lg:relative flex-none z-10 flex",
-        sbExpanded: "w-[80vw] md:w-[15rem] bg-leather-500 flex flex-col",
+        sbExpanded: "bg-background-sidebar-main w-[80vw] md:w-[15rem] flex flex-col",
         sbCollapsed: "w-[0rem]",
-        hamburgerBase: "w-[2.25rem] absolute top-3",
-        hamburgerExpanded: "stroke-parchment-500 right-3",
-        hamburgerCollapsed: "stroke-charcoal-500 left-3"
+        hamburgerBase: "stroke-text-primary w-[2.25rem] absolute top-3",
+        hamburgerExpanded: 'right-3',
+        hamburgerCollapsed: 'left-3',
     }
 
     const handleSbExpand: () => void = () => {

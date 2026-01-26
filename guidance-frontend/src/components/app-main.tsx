@@ -9,6 +9,7 @@ interface AppMainProps {
     settingsProps: SettingsProps
 }
 
+
 export const AppMain = ({ themeProps, settingsProps }: AppMainProps) => {
 
     const [appContent, setAppContent] = useState("classGenerator")

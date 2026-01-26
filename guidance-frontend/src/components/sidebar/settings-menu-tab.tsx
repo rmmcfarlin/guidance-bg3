@@ -9,21 +9,21 @@ export const SettingsTab = ({}) => {
     const {mainTheme, accentTheme, setMainTheme, setAccentTheme } = useTheme()
     const [selectedDropdown, setSetlectedDropdown] = useState<string>('')
 
-    const downArrowClass: string = "w-[20px] fill-parchment-300 ml-2"
-    const dropdownContainerClass: string = `flex flex-col items-center pt-3 pb-1 rounded-xl bg-leather-100 w-[150%] z-10 absolute top-7 right-0`
-    const dropdownButtonClass: string = "w-[90%] hover:bg-leather-500 text-parchment-300 rounded-xl text-center mb-2"
+    const downArrowClass: string = "w-[20px] fill-text-primary ml-2"
+    const dropdownContainerClass: string = `flex flex-col items-center pt-3 pb-1 rounded-xl bg-background-sidebar-secondary w-[150%] z-10 absolute top-7 right-0`
+    const dropdownButtonClass: string = "w-[90%] hover:bg-sidebar-button-hover text-text-primary rounded-xl text-center mb-2 py-2"
     const settingsOptionClass: string = "flex justify-between mb-7"
 
     const mainThemeOptions: MainTheme[] = [
-        "Light",
-        "Dark"
+        "light",
+        "dark"
     ]
     const accentThemeOptions: AccentTheme[] = [
-        "Cleric",
-        "Druid",
-        "Sorcerer",
-        "Warlock",
-        "Wizard"
+        "cleric",
+        "druid",
+        "sorcerer",
+        "warlock",
+        "wizard"
     ]
 
     const handleSetMainTheme = (option: MainTheme) => {
@@ -50,14 +50,22 @@ export const SettingsTab = ({}) => {
         }
     }
 
+    const toTitleCase = (theme: string) => {
+        return theme.charAt(0).toUpperCase() + theme.slice(1)
+    }
+
+    const themeMain: string = toTitleCase(mainTheme)
+    const themeAccent: string = toTitleCase(accentTheme)
+
+
 
     return(
         <div className="size-full flex flex-col">
             <div className={settingsOptionClass}>
-                <span className="text-parchment-300">Main Theme:</span>
+                <span className="text-text-primary">Main Theme:</span>
                 <div className="flex relative">
                     <div>
-                        <span className="text-parchment-300">{mainTheme}</span>
+                        <span className="text-text-primary">{themeMain}</span>
                         <OptionDropdown
                             options={mainThemeOptions}
                             containerClass={getDropdownClass('mainTheme')}
@@ -70,9 +78,9 @@ export const SettingsTab = ({}) => {
                 </div>
             </div>
             <div className={settingsOptionClass}>
-                <span className="text-parchment-300">Accent Theme:</span>
+                <span className="text-text-primary">Accent Theme:</span>
                 <div className="flex relative">
-                     <span className="text-parchment-300">{accentTheme}</span>
+                     <span className="text-text-primary">{themeAccent}</span>
                      <DownArrowSVG className={downArrowClass} onClick={() => handleShowDropdown('accentTheme')} />
                      <OptionDropdown
                         options={accentThemeOptions}

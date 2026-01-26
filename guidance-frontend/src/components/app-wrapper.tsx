@@ -20,6 +20,11 @@ export interface SettingsProps {
     settingsTab: SettingsTabOption,
     setSettingsTab: (option: SettingsTabOption) => void,
 }
+
+interface AppWrapperClasses {
+    appWrapperBgDark: string,
+    appWrapperBgLight: string
+}
  
 export const AppWrapper = ({}) => {
     
@@ -44,7 +49,7 @@ export const AppWrapper = ({}) => {
     }
 
     return(
-        <div id="appWrapper" className="bg-parchment-300 min-h-[100vh] w-[100vw] flex justify-center items-center relative m-0 overflow-auto">
+        <div id="appWrapper" className="bg-background-main min-h-[100vh] w-[100vw] flex justify-center items-center relative m-0 overflow-auto">
             <Header />
             <Sidebar 
                 settingsProps={settingsProps} 

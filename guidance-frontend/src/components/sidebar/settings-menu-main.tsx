@@ -14,9 +14,9 @@ export const SettingsMenu = ({ settingsProps }: SettingsMenuProps) => {
 
     const { showSettingsMenu, setShowSettingsMenu, settingsTab, setSettingsTab } = settingsProps
 
-    const settingsMenuClass: string = `${showSettingsMenu ? '' : 'hidden'} bg-leather-500 rounded-xl p-7`
+    const settingsMenuClass: string = `${showSettingsMenu ? '' : 'hidden'} bg-background-sidebar-main rounded-xl p-7`
     const settingsTabClass: string = 'flex w-[30%] lg:w-[90%] p-2 rounded-xl'
-    const settingsIconClass: string = `inline w-[20px] fill-parchment-300 mr-2`
+    const settingsIconClass: string = `inline w-[20px] fill-text-primary mr-2`
     
     const handleCloseSettings = () => {
         setShowSettingsMenu(false)
@@ -41,16 +41,16 @@ export const SettingsMenu = ({ settingsProps }: SettingsMenuProps) => {
 
     return (
         <div id="settingsMenu" className={settingsMenuClass}>
-            <div id="settingsInnerWrapper" className="flex flex-col lg:flex-row bg-leather-500 size-full relative rounded-xl">
-                <XSVG className="fill-parchment-300 size-[30px] absolute top-1 right-1" onClick={() => handleCloseSettings()} />
-                <div id="settings-tab-container" className="w-[40%] pt-10">
-                    <div className={`${settingsTabClass} ${settingsTab == 'Profile' ? 'bg-leather-100' : 'bg-leather-500'}`} onClick={() => handleSetTab("Profile")}>
+            <div id="settingsInnerWrapper" className="flex flex-col lg:flex-row bg-background-sidebar-main size-full relative rounded-xl">
+                <XSVG className="fill-text-primary size-[30px] absolute top-1 right-1" onClick={() => handleCloseSettings()} />
+                <div id="settings-tab-container" className="w-[40%] pt-10 border-r-[0.5px] border-r-text-primary">
+                    <div className={`${settingsTabClass} ${settingsTab == 'Profile' ? 'bg-sidebar-button-hover' : 'bg-background-sidebar-main'}`} onClick={() => handleSetTab("Profile")}>
                         <ProfileSVG className={settingsIconClass} />
-                        <span className="text-parchment-300">Profile</span>
+                        <span className="text-text-primary">Profile</span>
                     </div>
-                    <div className={`${settingsTabClass} ${settingsTab == 'Settings' ? 'bg-leather-100' : 'bg-leather-500'}`} onClick={() => handleSetTab("Settings")}>
+                    <div className={`${settingsTabClass} ${settingsTab == 'Settings' ? 'bg-sidebar-button-hover' : 'bg-background-sidebar-main'}`} onClick={() => handleSetTab("Settings")}>
                         <SettingsSVG className={settingsIconClass} />
-                        <span className="text-parchment-300">Settings</span>
+                        <span className="text-text-primary">Settings</span>
                     </div>
                 </div>
                 <div id="selected-tab-container">
