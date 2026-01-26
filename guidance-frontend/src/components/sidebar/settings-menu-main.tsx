@@ -3,6 +3,8 @@ import SettingsSVG from '../../assets/ui-icons/settings.svg?react'
 import XSVG from '../../assets/ui-icons/x-thin.svg?react'
 import { type SettingsProps, type SettingsTabOption } from '../app-wrapper'
 import { SettingsTab } from './settings-menu-tab'
+import { useRef } from 'react'
+import { useClickOutside } from '../../hooks/use-click-outside'
 import './settings-menu-main.css'
 
 
@@ -13,6 +15,7 @@ interface SettingsMenuProps {
 export const SettingsMenu = ({ settingsProps }: SettingsMenuProps) => {
 
     const { showSettingsMenu, setShowSettingsMenu, settingsTab, setSettingsTab } = settingsProps
+    const ref = useRef<HTMLDivElement>(null)
 
     const settingsMenuClass: string = `${showSettingsMenu ? '' : 'hidden'} bg-background-sidebar-main rounded-xl p-7`
     const settingsTabClass: string = 'flex w-[30%] lg:w-[90%] p-2 rounded-xl'
@@ -21,6 +24,8 @@ export const SettingsMenu = ({ settingsProps }: SettingsMenuProps) => {
     const handleCloseSettings = () => {
         setShowSettingsMenu(false)
     }
+
+    useClickOutside(ref, () => setShowSettingsMenu(false))
     
     const handleSetTab = (option: SettingsTabOption) => {
         setSettingsTab(option)
@@ -40,7 +45,7 @@ export const SettingsMenu = ({ settingsProps }: SettingsMenuProps) => {
     }
 
     return (
-        <div id="settingsMenu" className={settingsMenuClass}>
+        <div ref={ref} id="settingsMenu" className={settingsMenuClass}>
             <div id="settingsInnerWrapper" className="flex flex-col lg:flex-row bg-background-sidebar-main size-full relative rounded-xl">
                 <XSVG className="fill-text-primary size-[30px] absolute top-1 right-1" onClick={() => handleCloseSettings()} />
                 <div id="settings-tab-container" className="w-[40%] pt-10 border-r-[0.5px] border-r-text-primary">

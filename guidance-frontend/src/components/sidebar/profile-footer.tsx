@@ -3,7 +3,8 @@ import DotsIcon from '../../assets/ui-icons/dots-horizontal.svg?react'
 import ProfileSVG from '../../assets/ui-icons/profile.svg?react'
 import SettingsSVG from '../../assets/ui-icons/settings.svg?react'
 import LogoutSVG from '../../assets/ui-icons/logout.svg?react'
-import { useState } from 'react'
+import { useClickOutside } from '../../hooks/use-click-outside'
+import { useState, useRef } from 'react'
 import { type SettingsProps, type SettingsTabOption } from '../app-wrapper'
 
 interface ProfileFooterProps {
@@ -14,6 +15,7 @@ interface ProfileFooterProps {
 export const ProfileFooter = ({sidebarExpanded, settingsProps}: ProfileFooterProps) => {
 
     const [showProfileDropdown, setShowProfileDropdown] = useState<boolean>(false)
+    const ref = useRef<HTMLDivElement>(null)
 
     const { setSettingsTab, setShowSettingsMenu } = settingsProps
 
@@ -34,8 +36,10 @@ export const ProfileFooter = ({sidebarExpanded, settingsProps}: ProfileFooterPro
         setShowProfileDropdown(!showProfileDropdown)
     }
 
+    useClickOutside(ref, () => setShowProfileDropdown(false))
+
     return(
-        <div className={sidebarExpanded ? footerExpanded : footerCollapsed}>
+        <div ref={ref} className={sidebarExpanded ? footerExpanded : footerCollapsed}>
             <img src={ProfilePlaceholder} className="w-[30px] rounded-[100%] mr-4"></img>
             <span className="text-text-primary">Ryan McFarlin</span>
             <DotsIcon className="w-[17px] fill-text-primary ml-auto" onClick={() => handleProfileDropdown()} />

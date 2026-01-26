@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import { useTheme } from '../../context-providers/theme-provider.tsx'
+import { useState, useRef } from 'react'
 import HamburgerIcon from "../../assets/ui-icons/hamburger-icon.svg?react"
 import { SidebarOptions } from './options-main.tsx'
 import { ProfileFooter } from './profile-footer.tsx'
 import { type ThemeContextValue } from "../../context-providers/theme-provider.tsx"
-import { type SettingsProps, type SettingsTabOption } from '../app-wrapper.tsx'
+import { type SettingsProps } from '../app-wrapper.tsx'
+import { useClickOutside } from '../../hooks/use-click-outside.tsx'
 
 interface SidebarProps {
     themeProps: ThemeContextValue,
@@ -20,9 +20,10 @@ interface SidebarClasses {
     hamburgerCollapsed: string
 }
 
-export const Sidebar = ({ themeProps, settingsProps }: SidebarProps) => {
+export const Sidebar = ({ settingsProps }: SidebarProps) => {
 
     const [sidebarExpanded, setSidebarExpanded] = useState<boolean>(false)
+    const ref = useRef<HTMLDivElement>(null)
 
     const sidebarClasses: SidebarClasses = {
         sbBase: "h-screen absolute left-0 lg:relative flex-none z-10 flex",
@@ -37,8 +38,10 @@ export const Sidebar = ({ themeProps, settingsProps }: SidebarProps) => {
         setSidebarExpanded(!sidebarExpanded)
     }
 
+    useClickOutside(ref, () => setSidebarExpanded(false))
+
     return(
-            <div id="sidebarMain" className={`${sidebarClasses.sbBase} ${sidebarExpanded ? sidebarClasses.sbExpanded : sidebarClasses.sbCollapsed}`}>
+            <div ref={ref} id="sidebarMain" className={`${sidebarClasses.sbBase} ${sidebarExpanded ? sidebarClasses.sbExpanded : sidebarClasses.sbCollapsed}`}>
                 <HamburgerIcon className={`${sidebarClasses.hamburgerBase} 
                     ${sidebarExpanded ? sidebarClasses.hamburgerExpanded : sidebarClasses.hamburgerCollapsed}`} onClick={() => handleSbExpand()} />
                 <SidebarOptions sidebarExpanded={sidebarExpanded} />
