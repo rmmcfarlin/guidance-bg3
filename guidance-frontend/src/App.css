@@ -132,8 +132,8 @@
   --color-background-main: var(--parchment-100);
   --color-background-sidebar-main: var(--sand-300);
   --color-background-sidebar-secondary: var(--parchment-500);
-  --color-background-generator-primary: var(--parchment-500);
-  --color-background-generator-secondary: var(--sand-600)
+  --color-background-generator-primary: var(--parchment-700);
+  --color-background-generator-secondary: var(--sand-500);
 
   /* Active States */
   --color-sidebar-button-hover: var(--parchment-100);
