@@ -6,7 +6,7 @@ export const BG3_Classes = {
         "berserker": { "name": "Berserker" },
         "giant": { "name": "Giant" },
         "wild-heart": { "name": "Wild Heart" },
-        "wild-magic": { "name": "Wild Magic" }
+        "wild-magic-barbarian": { "name": "Wild Magic" }
       }
     },
     "bard": {

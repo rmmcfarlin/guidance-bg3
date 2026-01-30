@@ -6,13 +6,19 @@ function randItem<T>(arr: readonly T[]): T {
 
 const classArr: Bg3ClassId[] = Object.keys(BG3_Classes.classes) as Bg3ClassId[]
 
+
 export function getClass() {
-    return randItem(classArr)
-}
+  const rolledClass = randItem(classArr)
 
-export function getSubclass<C extends Bg3ClassId> (c: C): Bg3SubclassId<C>{
+  const subclasses =
+    BG3_Classes.classes[rolledClass].subclasses as Record<string, { name: string }>
 
-    const subclassArr = Object.keys(BG3_Classes.classes[c].subclasses) as Bg3SubclassId<C>[]
+  const rolledSubclass = randItem(Object.keys(subclasses))
 
-    return randItem(subclassArr)
+  return {
+    classId: rolledClass,
+    className: BG3_Classes.classes[rolledClass].name,
+    subclassId: rolledSubclass,
+    subclassName: subclasses[rolledSubclass].name,
+  }
 }

@@ -21,7 +21,7 @@ export const AppMain = ({ themeProps, settingsProps }: AppMainProps) => {
     }
 
     return(
-        <div id="appMain" className="w-full relative flex justify-center items-center flex-0 lg:flex-1 lg:min-w-0 lg:overflow-auto mr-auto ml-auto lg:p-50">
+        <div id="appMain" className="w-full min-h-full relative flex justify-center items-center flex-0 lg:flex-1 lg:min-w-0 lg:overflow-auto mr-auto ml-auto lg:px-50">
             {renderContent()}
             <SettingsMenu
                 settingsProps={settingsProps}
