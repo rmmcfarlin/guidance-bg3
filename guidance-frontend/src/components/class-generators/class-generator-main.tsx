@@ -14,11 +14,11 @@ export const ClassGeneratorMain = ({}) => {
         "Complete"
     ]
 
-    const tabContainerClass: string = "flex w-[70%] mb-10 justify-center border-b-[1px] border-b-text-primary pb-3 ml-auto mr-auto"
-    const tabButtonClass: string = "text-text-primary p-2 rounded-xl mt-2 w-[20%] drop-shadow-md"
+    const tabContainerClass: string = "flex w-[100%] lg:w-[70%] mb-10 justify-center border-b-[1px] border-b-text-primary pb-3 ml-auto mr-auto"
+    const tabButtonClass: string = "text-text-primary text-s lg:text-[1rem] p-2 rounded-xl mt-2 w-[24%] lg:w-[20%] drop-shadow-md"
     const getTabClass = (option: GeneratorTabs) => {
         if (option == selectedTab) {
-            return `bg-button-active text-button-text z-10 bg-opacity-25 p-2 rounded-xl mt-2 w-[20%] drop-shadow-md`
+            return `bg-button-active text-button-text bg-opacity-25 p-2 rounded-xl mt-2 w-[24%] drop-shadow-md text-s lg:text-[1rem]`
         } else {
             return tabButtonClass
         }
@@ -33,6 +33,7 @@ export const ClassGeneratorMain = ({}) => {
         }
     }
 
+
     return(
         <div id="generator-wrapper" className="w-full h-[80vh] flex flex-col ml-auto mr-auto">
             <div>
@@ -43,7 +44,7 @@ export const ClassGeneratorMain = ({}) => {
                     setValue={handleSelectTab}
                     />
             </div>
-            <div id="generator-content-main" className="bg-background-generator-primary size-full rounded-xl drop-shadow-xl mt-auto mb-auto">
+            <div id="generator-content-main" className="bg-background-generator-primary h-full w-[90vw] lg:w-full rounded-xl drop-shadow-xl mt-auto mb-auto">
                 {renderContent()}
             </div>  
         </div>
