@@ -129,6 +129,8 @@
   --color-button-active: var(--color-button-active);
   --color-tab-button-active: var(--color-tab-button-active);
   --color-button-text-dark: var(--color-button-text-dark:);
+  --color-bg-menu-dropdown: var(--color-bg-menu-dropdown:);
+  
 }
 
 /* Main Themes */
@@ -145,6 +147,7 @@
   --color-background-sidebar-secondary: var(--parchment-500);
   --color-background-generator-primary: var(--parchment-700);
   --color-background-generator-secondary: var(--sand-500);
+  --color-bg-menu-dropdown: var(--sand-500);
   --color-background-portrait: var(--cleric-accent-active);
 
   /* Active States */
@@ -165,6 +168,7 @@
   --color-background-generator-primary: var(--charcoal-500);
   --color-background-generator-secondary: var(--charcoal-500);
   --color-background-portrait: var(--cleric-accent-active);
+  --color-bg-menu-dropdown: var(--charcoal-700);
   
   /* Active States */
   --color-sidebar-button-hover: var(--charcoal-700);

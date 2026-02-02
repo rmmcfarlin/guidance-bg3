@@ -9,6 +9,8 @@ interface RollResult {
     subclassName: string
 }
 
+
+
 export const ClassSubclassGenerator = ({}) => {
 
     const [hasRolled, setHasRolled] = useState<boolean>(false)
@@ -57,7 +59,7 @@ export const ClassSubclassGenerator = ({}) => {
                         <span className="text-text-secondary text-3xl mt-2">{hasRolled ? subclassName : ' '}</span>
                     </div>
                     <div className="flex flex-col items-center mt-10">
-                        <button onClick={() => handleRollClass()} className="bg-button-primary text-button-text w-70 rounded-xl py-4 text-center text-xl font-bold hover:bg-button-hover">Roll</button>
+                        <button onClick={() => handleRollClass()} className="bg-button-primary text-button-text w-50 rounded-xl py-4 text-center text-xl font-bold hover:bg-button-hover">Roll</button>
                         <button onClick={() => handleRerollSubclass(result.classId)} className="bg-button-secondary text-button-text-dark w-40 rounded-xl py-3 mt-3 hover:bg-button-secondary-hover">Reroll Subclass</button>
                     </div>
                 </div>

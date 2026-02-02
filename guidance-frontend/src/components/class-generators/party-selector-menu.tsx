@@ -1,16 +1,18 @@
-import { useState } from 'react'
+import { useClickOutside } from "../../hooks/use-click-outside"
+import { useRef } from "react"
 import { OptionDropdown } from "../ui-components/option-dropdown"
 
 interface PartySelectorMenuProps {
-    selectedParty: string[]
-    setSelectedParty: () => void
+    selectedParty: PartyMember[]
+    setSelectedParty: React.Dispatch<React.SetStateAction<PartyMember[]>>
     partyMenuClass: string
+    setShowPartyDropdown: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-type PartyMember = 
+export type PartyMember = 
     "Astarion"|
     "Gale"|
-    "Lae'zel"|
+    "Laezel"|
     "Shadowheart"|
     "Wyll"|
     "Karlach"|
@@ -19,23 +21,26 @@ type PartyMember =
     "Jaheira"|
     "Minsc"|
     "Tav"|
-    ""
+    "Durge"
+    
+export type PartyMemberOrNull = PartyMember | null
 
-export const PartySelectorMenu = ({ selectedParty, partyMenuClass }: PartySelectorMenuProps) => {
+export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuClass, setShowPartyDropdown }: PartySelectorMenuProps) => {
 
-    const [newPartyMember, setNewPartyMember] = useState<PartyMember>("")
-    const [showPartyDropdown, setShowPartyDropdown] = useState<boolean>(false)
-
+    const ref = useRef<HTMLDivElement>(null)
     const handleNewPartyMember = (name: PartyMember) => {
-        setNewPartyMember(name)
+        setSelectedParty([...selectedParty, name])
+        setShowPartyDropdown(false)
     }
 
-    const partyDropdownClass = `w-[100% bg-background-sidebar-main p-5 flex flex-col`
-    const partyButtonClass = "w-full text-text-primary rounded-xl p-5 text-center"
-    const partyOptions: PartyMember[] = ["Tav", "Astarion", "Gale", "Karlach", "Wyll", "Lae'zel", "Shadowheart", "Minthara", "Halsin", "Jaheira", "Minsc"]
+    useClickOutside(ref, () => setShowPartyDropdown(false))
+
+    const partyDropdownClass = `w-[100%] p-1 flex flex-col`
+    const partyButtonClass = "w-full text-text-primary rounded-xl text-center hover:bg-button-hover py-4 mt-3"
+    const partyOptions: PartyMember[] = ["Tav", "Durge", "Astarion", "Gale", "Karlach", "Wyll", "Laezel", "Shadowheart", "Minthara", "Halsin", "Jaheira", "Minsc"]
 
     return(
-        <div id="edit-party-menu-wrapper" className={partyMenuClass}>
+        <div id="edit-party-menu-wrapper" className={partyMenuClass} ref={ref}>
             <p className="text-text-primary font-bold">Add Party Member</p>
             <OptionDropdown
                 options={partyOptions}
