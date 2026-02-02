@@ -91,7 +91,7 @@ export const BG3_Classes = {
         "draconic-bloodline": { "name": "Draconic Bloodline" },
         "shadow-magic": { "name": "Shadow Magic"},
         "storm-sorcery": { "name": "Storm Sorcery" },
-        "wild-magic": { "name": "Wild Magic" }
+        "wild-magic-sorcerer": { "name": "Wild Magic" }
       }
     },
     "warlock": {

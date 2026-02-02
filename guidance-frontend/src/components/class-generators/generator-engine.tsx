@@ -22,3 +22,16 @@ export function getClass() {
     subclassName: subclasses[rolledSubclass].name,
   }
 }
+
+export function rerollSubclass (cls: Bg3ClassId) {
+
+  const subclasses = BG3_Classes.classes[cls].subclasses as Record<string, {name: string}>
+  const rolledSubclass = randItem(Object.keys(subclasses))
+
+  return {
+    classId: cls,
+    className: BG3_Classes.classes[cls].name,
+    subclassId: rolledSubclass,
+    subclassName: subclasses[rolledSubclass].name
+  }
+}
