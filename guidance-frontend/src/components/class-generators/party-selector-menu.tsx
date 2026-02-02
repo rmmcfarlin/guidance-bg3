@@ -1,5 +1,5 @@
 import { useClickOutside } from "../../hooks/use-click-outside"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { OptionDropdown } from "../ui-components/option-dropdown"
 
 interface PartySelectorMenuProps {
@@ -25,19 +25,39 @@ export type PartyMember =
     
 export type PartyMemberOrNull = PartyMember | null
 
+
 export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuClass, setShowPartyDropdown }: PartySelectorMenuProps) => {
 
     const ref = useRef<HTMLDivElement>(null)
-    const handleNewPartyMember = (name: PartyMember) => {
-        setSelectedParty([...selectedParty, name])
-        setShowPartyDropdown(false)
-    }
+    const [partyOptions, setPartyOptions] = useState<PartyMember[]>([
+        "Tav", 
+        "Durge", 
+        "Astarion", 
+        "Gale", 
+        "Karlach", 
+        "Wyll", 
+        "Laezel", 
+        "Shadowheart", 
+        "Minthara", 
+        "Halsin", 
+        "Jaheira", 
+        "Minsc"
+    ])
 
     useClickOutside(ref, () => setShowPartyDropdown(false))
 
     const partyDropdownClass = `w-[100%] p-1 flex flex-col`
     const partyButtonClass = "w-full text-text-primary rounded-xl text-center hover:bg-button-hover py-4 mt-3"
-    const partyOptions: PartyMember[] = ["Tav", "Durge", "Astarion", "Gale", "Karlach", "Wyll", "Laezel", "Shadowheart", "Minthara", "Halsin", "Jaheira", "Minsc"]
+    
+    const handleNewPartyMember = (name: PartyMember) => {       
+        setSelectedParty([...selectedParty, name])
+        setShowPartyDropdown(false)
+
+        if (name !== "Tav") {
+            const copy: PartyMember[] = partyOptions.filter(char => char !== name)
+            setPartyOptions(copy)
+        }
+    }
 
     return(
         <div id="edit-party-menu-wrapper" className={partyMenuClass} ref={ref}>

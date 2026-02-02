@@ -68,8 +68,8 @@ export const PartySelectorSidebar = ({}) => {
 
     const handleRemoveMember = (member: PartyMember) => {
 
-        const index: number = findPartyMember(member)
-        if (index == -1) return
+        console.log(`member: ${member}`)
+
         const copy: PartyMember[] = [...selectedParty]
         const filtered: PartyMember[] = copy.filter(char => char !== member)
 
@@ -79,12 +79,12 @@ export const PartySelectorSidebar = ({}) => {
     useClickOutside(ref, () => setClickedPartymember(null))
 
     return(
-        <div id="party-selector-sidebar" className="flex flex-col w-[8%] ml-5 lg:ml-0 lg:absolute lg:left-10 items-center">
+        <div ref={ref} id="party-selector-sidebar" className="flex flex-col w-[8%] ml-5 lg:ml-0 lg:absolute lg:left-10 items-center">
             {selectedParty.map(member => {
                 return (
-                    <div className={portraitWrapper} ref={ref}>
+                    <div className={portraitWrapper} key={member}>
                         <img src={portraitMap[member]} className={characterPortraitIcon} onClick={() => setClickedPartymember(member)}></img>
-                        <button className={getRemoveButtonClass(member)} onClick={() => handleRemoveMember(member)}>X</button>
+                        <button id={`${member} delete button`} className={getRemoveButtonClass(member)} onClick={() => handleRemoveMember(member)}>X</button>
                     </div>
                 )
             })}
