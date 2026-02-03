@@ -2,6 +2,7 @@ import { SelectableTabs } from "../ui-components/selectable-tabs/selectable-tabs
 import { useState } from 'react'
 import { ClassSubclassGenerator } from "./class-subclass-generator"
 import { PartySelectorSidebar } from "./party-selector-sidebar"
+import { type PartyMember } from "./party-selector-menu"
 
 export type GeneratorTabs = "Class" | "Build" | "Character" | "Complete"
 
@@ -14,6 +15,9 @@ export const ClassGeneratorMain = ({}) => {
         "Character",
         "Complete"
     ]
+    const [selectedParty, setSelectedParty] = useState<PartyMember[]>([
+        "Tav"
+    ])
 
     const tabContainerClass: string = "flex w-[100%] lg:w-[70%] mb-10 justify-center border-b-[1px] border-b-text-primary pb-3 ml-auto mr-auto"
     const tabButtonClass: string = "text-text-primary text-s lg:text-[1rem] p-2 rounded-xl mt-2 w-[24%] lg:w-[20%] drop-shadow-md"
@@ -30,12 +34,15 @@ export const ClassGeneratorMain = ({}) => {
 
     const renderContent = () => {
         if (selectedTab == "Class") {
-            return <ClassSubclassGenerator />
+            return <ClassSubclassGenerator
+                    selectedParty={selectedParty}
+                    setSelectedParty={setSelectedParty} 
+                 />
         }
     }
 
     return(
-        <div id="generator-wrapper" className="w-full h-[80vh] flex flex-col ml-auto mr-auto">
+        <div id="generator-wrapper" className="w-full min-h-[80vh] flex flex-col ml-auto mr-auto overflow-scroll">
             <div>
                 <SelectableTabs
                     options={generatorTabs}
@@ -45,7 +52,10 @@ export const ClassGeneratorMain = ({}) => {
                 />
             </div>
             <div className="flex">
-                <PartySelectorSidebar />
+                <PartySelectorSidebar
+                    selectedParty={selectedParty}
+                    setSelectedParty={setSelectedParty} 
+                />
                 <div id="generator-content-main" className="flex justify-center h-full w-[90vw] lg:w-full rounded-xl drop-shadow-xl my-auto">
                     {renderContent()}
                 </div>

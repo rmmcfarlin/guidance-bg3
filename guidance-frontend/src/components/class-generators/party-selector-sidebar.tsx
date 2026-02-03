@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import PlusCurved from '../../assets/ui-icons/plus-curved.svg?react'
 import { PartySelectorMenu } from './party-selector-menu'
 import { type PartyMember, type PartyMemberOrNull } from './party-selector-menu'
@@ -32,17 +32,20 @@ const portraitMap: Record<PartyMember, string> = {
     Durge
 }
 
-export const PartySelectorSidebar = ({}) => {
+interface PartySelectorSidebarProps {
+    selectedParty: PartyMember[]
+    setSelectedParty: React.Dispatch<React.SetStateAction<PartyMember[]>>
+}
+
+export const PartySelectorSidebar = ({ selectedParty, setSelectedParty }: PartySelectorSidebarProps) => {
     const ref = useRef<HTMLDivElement>(null)
     const [showPartyDropdown, setShowPartyDropdown] = useState<boolean>(false)
     const [clickedPartymember, setClickedPartymember] = useState<PartyMemberOrNull>(null)
-    const [selectedParty, setSelectedParty] = useState<PartyMember[]>([
-        "Tav"
-    ])
+    
 
     const portraitWrapper: string = "w-[50px] lg:w-[75px] p-0.5 bg-background-portrait flex flex-col items-center mb-5"
     const characterPortraitIcon: string = "w-full border-[1px] border-black"
-    const removePartymemberButtonClass: string = 'size-full bg-[#8E2A1F] hover:bg-[#B33A2C] text-[#F1E9DA] left-1 p-1 rounded-xl z-10'
+    const removePartymemberButtonClass: string = 'size-full bg-[#8E2A1F] hover:bg-[#B33A2C] text-[#F1E9DA] left-1 p-1 z-10'
     const partyMenuClass: string = `${showPartyDropdown ? '' : 'hidden'} bg-bg-menu-dropdown rounded-xl p-2 max-h-[20rem] overflow-scroll w-40 absolute left-25 z-10`
 
     const handleShowPartyMenu = () => {

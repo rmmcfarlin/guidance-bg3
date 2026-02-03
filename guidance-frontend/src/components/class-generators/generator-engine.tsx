@@ -1,4 +1,5 @@
 import { BG3_Classes, type Bg3ClassId, type Bg3SubclassId } from '../../types/bg3-classes'
+import { type PartyMember } from './party-selector-menu'
 
 function randItem<T>(arr: readonly T[]): T {
     return arr[Math.floor(Math.random() * arr.length)]
@@ -34,4 +35,30 @@ export function rerollSubclass (cls: Bg3ClassId) {
     subclassId: rolledSubclass,
     subclassName: subclasses[rolledSubclass].name
   }
+}
+
+
+export function getPartyClasses (party: PartyMember[]) {
+
+  let result = []
+
+  for (let i = 0; i < party.length; i++) {
+    let rolledClass = randItem(classArr)
+    let subclasses = BG3_Classes.classes[rolledClass].subclasses as Record<string, { name: string }>
+    let rolledSubclass = randItem(Object.keys(subclasses))
+
+    let memberResult = {
+      [party[i]]: {
+        memberName: party[i],
+        classId: rolledClass,
+        className: BG3_Classes.classes[rolledClass].name,
+        subclassId: rolledSubclass,
+        subclassName: subclasses[rolledSubclass].name 
+      }
+    }
+
+    result.push(memberResult)
+  }
+
+  return result
 }
