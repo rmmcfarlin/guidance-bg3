@@ -25,7 +25,7 @@ export const Sidebar = ({ settingsProps }: SidebarProps) => {
     const ref = useRef<HTMLDivElement>(null)
 
     const sidebarClasses: SidebarClasses = {
-        sbBase: "h-screen absolute left-0 lg:relative flex-none z-10 flex",
+        sbBase: "h-[100vh] absolute left-0 lg:relative flex-none z-10 flex",
         sbExpanded: "bg-background-sidebar-main w-[80vw] md:w-[15rem] flex flex-col",
         sbCollapsed: "w-[0rem]",
         hamburgerBase: "stroke-text-primary w-[2.25rem] absolute top-3",

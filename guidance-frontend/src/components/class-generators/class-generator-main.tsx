@@ -42,7 +42,7 @@ export const ClassGeneratorMain = ({}) => {
     }
 
     return(
-        <div id="generator-wrapper" className="w-full min-h-[80vh] flex flex-col ml-auto mr-auto overflow-scroll">
+        <div id="generator-wrapper" className="w-full min-h-[80vh] flex flex-col ml-auto mr-auto">
             <div>
                 <SelectableTabs
                     options={generatorTabs}

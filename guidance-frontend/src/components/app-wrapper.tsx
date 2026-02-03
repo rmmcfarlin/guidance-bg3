@@ -48,17 +48,20 @@ export const AppWrapper = ({}) => {
         setAccentTheme
     }
 
-    return(
-        <div id="appWrapper" className="bg-background-main min-h-[100vh] w-[100vw] flex justify-center items-center relative m-0 overflow-auto">
-            <Header />
-            <Sidebar 
-                settingsProps={settingsProps} 
-                themeProps={themeProps} 
+    return (
+        <div id="appWrapper" className="bg-background-main h-[100vh] w-[100vw] flex justify-center relative m-0">
+            
+            <Sidebar
+                    settingsProps={settingsProps}
+                    themeProps={themeProps}
                 />
-            <AppMain 
-                themeProps={themeProps}
-                settingsProps={settingsProps} 
+            <div className="flex flex-col w-full min-h-[100vh] items-center overflow-scroll">
+                <Header />
+                <AppMain
+                    themeProps={themeProps}
+                    settingsProps={settingsProps}
                 />
-        </div>  
+            </div>
+        </div>
     )
 }

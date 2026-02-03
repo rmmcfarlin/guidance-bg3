@@ -5,7 +5,7 @@ export const Header = ({ }) => {
 
     return (
         <>
-            <div id="header" className="flex justify-center items-center w-[45%] absolute top-5">
+            <div id="header" className="flex justify-center items-center w-[45%] my-5">
                 <PrismIcon className={`w-20 stroke-text-primary stroke-12 size-[60px]`} />
                 <div className="flex flex-col mr-1">
                     <span className='text-xl lg:text-[1.5rem] text-text-primary'>Guidance</span>

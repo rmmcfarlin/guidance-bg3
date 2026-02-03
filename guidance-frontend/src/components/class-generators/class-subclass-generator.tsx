@@ -76,12 +76,12 @@ export const ClassSubclassGenerator = ({ selectedParty, setSelectedParty }: Clas
     const useIcon = new URL(`${iconPath}`, import.meta.url).href
 
     const partymemberOutputClass: string = "flex items-center w-full p-2 border-b-1 border-b-text-primary last:border-b-0"
-    const partyRollButtonClass: string = "bg-button-primary text-button-text w-50 mt-15 rounded-xl py-4 text-center text-xl font-bold hover:bg-button-hover"
+    const partyRollButtonClass: string = "bg-button-primary text-button-text w-50 mt-5 rounded-xl py-4 text-center text-xl font-bold hover:bg-button-hover"
     const partymemberIconClass: string = "size-[100px]"
 
 
     return (
-        <div className="flex bg-background-generator-primary w-[80%] p-3 pt-10 lg:p-10 justify-center items-center rounded-xl">
+        <div className="flex bg-background-generator-primary w-[80%] p-2 pt-10 lg:p-3 lg:px-10 justify-center items-center rounded-xl">
             {selectedParty.length == 1 ? (
                     <div id="class-stats-panel" className="flex flex-col w-full items-center">
                         <img src={useIcon} className="w-[200px]"></img>
@@ -95,7 +95,7 @@ export const ClassSubclassGenerator = ({ selectedParty, setSelectedParty }: Clas
                         </div>
                     </div>
             ) : (
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center w-full">
                     {selectedParty.map(member => {
 
                         if (!partyResult) return null
