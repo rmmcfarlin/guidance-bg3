@@ -166,9 +166,9 @@
   --color-background-sidebar-main: var(--charcoal-500);
   --color-background-sidebar-secondary: var(--charcoal-800);
   --color-background-generator-primary: var(--charcoal-500);
-  --color-background-generator-secondary: var(--charcoal-500);
+  --color-background-generator-secondary: var(--charcoal-700);
   --color-background-portrait: var(--cleric-accent-active);
-  --color-bg-menu-dropdown: var(--charcoal-700);
+  --color-bg-menu-dropdown: var(--charcoal-500);
   
   /* Active States */
   --color-sidebar-button-hover: var(--charcoal-700);

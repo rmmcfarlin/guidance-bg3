@@ -47,7 +47,7 @@ export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuCl
     useClickOutside(ref, () => setShowPartyDropdown(false))
 
     const partyDropdownClass = `w-[100%] p-1 flex flex-col`
-    const partyButtonClass = "w-full text-text-primary rounded-xl text-center hover:bg-button-hover py-4 mt-3"
+    const partyButtonClass = "w-full text-text-primary rounded-xl text-center hover:bg-button-hover hover:text-button-text py-4 mt-3"
     
     const handleNewPartyMember = (name: PartyMember) => {       
         setSelectedParty([...selectedParty, name])

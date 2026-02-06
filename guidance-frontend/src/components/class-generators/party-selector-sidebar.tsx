@@ -91,8 +91,8 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty }: PartyS
                     </div>
                 )
             })}
-            <div className="w-[50px] h-[66.67px] lg:w-[75px] lg:h-[100px] bg-background-generator-secondary flex flex-col items-center justify-center">
-                <PlusCurved className="size-[25px] fill-text-primary" onClick={() => handleShowPartyMenu()} />
+            <div onClick={() => handleShowPartyMenu()} className="w-[50px] h-[66.67px] lg:w-[75px] lg:h-[100px] bg-background-generator-primary flex flex-col items-center justify-center">
+                <PlusCurved className="size-[25px] fill-text-primary" />
             </div>
             <PartySelectorMenu 
                 selectedParty={selectedParty}
