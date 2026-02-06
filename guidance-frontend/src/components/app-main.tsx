@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { type ThemeContextValue } from "../context-providers/theme-provider.tsx"
 import { type SettingsProps } from './app-wrapper.tsx'
-import { ClassGeneratorMain } from './class-generators/class-generator-main'
+import { GeneratorWrapper } from './class-generators/class-generator-wrapper.tsx'
 import { SettingsMenu } from './sidebar/settings-menu-main.tsx'
 
 interface AppMainProps {
@@ -16,7 +16,7 @@ export const AppMain = ({ themeProps, settingsProps }: AppMainProps) => {
 
     const renderContent = () => {
         if (appContent == "classGenerator") {
-            return <ClassGeneratorMain />
+            return <GeneratorWrapper />
         }
     }
 

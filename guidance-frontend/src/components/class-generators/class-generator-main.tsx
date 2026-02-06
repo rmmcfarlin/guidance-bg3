@@ -2,12 +2,12 @@ import { SelectableTabs } from "../ui-components/selectable-tabs/selectable-tabs
 import { useState } from 'react'
 import { ClassSubclassGenerator } from "./class-subclass-generator"
 import { PartySelectorSidebar } from "./party-selector-sidebar"
-import { type PartyMember } from "./party-selector-menu"
+import { useGeneratorContext } from "../../context-providers/generator-provider"
 
 export type GeneratorTabs = "Class" | "Build" | "Character" | "Complete"
 
 export const ClassGeneratorMain = ({}) => {
-    const [hasRolled, setHasRolled] = useState<boolean>(false)
+    
     const [selectedTab, setSelectedTab] = useState<GeneratorTabs>("Class")
     const generatorTabs: GeneratorTabs[] = [
         "Class",
@@ -15,9 +15,8 @@ export const ClassGeneratorMain = ({}) => {
         "Character",
         "Complete"
     ]
-    const [selectedParty, setSelectedParty] = useState<PartyMember[]>([
-        "Tav"
-    ])
+
+    const { hasRolled, setHasRolled, selectedParty, setSelectedParty, partyResult, setPartyResult } = useGeneratorContext()
 
     const tabContainerClass: string = "flex w-[100%] lg:w-[70%] mb-10 justify-center border-b-[1px] border-b-text-primary pb-3 ml-auto mr-auto"
     const tabButtonClass: string = "text-text-primary text-s lg:text-[1rem] p-2 rounded-xl mt-2 w-[24%] lg:w-[20%] drop-shadow-md"
@@ -44,25 +43,26 @@ export const ClassGeneratorMain = ({}) => {
     }
 
     return(
-        <div id="generator-wrapper" className="w-full min-h-[80vh] flex flex-col ml-auto mr-auto">
-            <div>
-                <SelectableTabs
-                    options={generatorTabs}
-                    containerClass={tabContainerClass}
-                    getButtonClass={getTabClass}
-                    setValue={handleSelectTab}
-                />
-            </div>
-            <div className="flex">
-                <PartySelectorSidebar
-                    selectedParty={selectedParty}
-                    setSelectedParty={setSelectedParty}
-                    hasRolled={hasRolled} 
-                />
-                <div id="generator-content-main" className="flex justify-center h-full w-[90vw] lg:w-full rounded-xl drop-shadow-xl my-auto">
-                    {renderContent()}
+ 
+            <div id="generator-wrapper" className="w-full min-h-[80vh] flex flex-col ml-auto mr-auto">
+                <div>
+                    <SelectableTabs
+                        options={generatorTabs}
+                        containerClass={tabContainerClass}
+                        getButtonClass={getTabClass}
+                        setValue={handleSelectTab}
+                    />
+                </div>
+                <div className="flex">
+                    <PartySelectorSidebar
+                        selectedParty={selectedParty}
+                        setSelectedParty={setSelectedParty}
+                        hasRolled={hasRolled}
+                    />
+                    <div id="generator-content-main" className="flex justify-center h-full w-[90vw] lg:w-full rounded-xl drop-shadow-xl my-auto">
+                        {renderContent()}
+                    </div>
                 </div>
             </div>
-        </div>
     )
 }

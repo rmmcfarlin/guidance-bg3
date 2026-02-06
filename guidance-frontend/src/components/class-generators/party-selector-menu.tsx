@@ -1,6 +1,9 @@
 import { useClickOutside } from "../../hooks/use-click-outside"
 import { useRef, useState } from "react"
 import { OptionDropdown } from "../ui-components/option-dropdown"
+import { useGeneratorContext } from "../../context-providers/generator-provider"
+import { getClass } from "./generator-engine"
+import { type PartymemberRollResult, type PartyRollResultOrNull } from "../../context-providers/generator-provider"
 
 interface PartySelectorMenuProps {
     selectedParty: PartyMember[]
@@ -29,6 +32,7 @@ export type PartyMemberOrNull = PartyMember | null
 
 export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuClass, setShowPartyDropdown, hasRolled }: PartySelectorMenuProps) => {
 
+    const { partyResult, setPartyResult } = useGeneratorContext()
     const ref = useRef<HTMLDivElement>(null)
     const [partyOptions, setPartyOptions] = useState<PartyMember[]>([
         "Tav", 
@@ -50,7 +54,29 @@ export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuCl
     const partyDropdownClass = `w-[100%] p-1 flex flex-col`
     const partyButtonClass = "w-full text-text-primary rounded-xl text-center hover:bg-button-hover hover:text-button-text py-4 mt-3"
     
-    const handleNewPartyMember = (name: PartyMember) => {  
+    const handleNewPartyMember = (name: PartyMember) => {
+
+        if (hasRolled) {
+            const result = getClass()
+
+            const newClass: PartymemberRollResult = {
+                [name]: {
+                    memberName: name,
+                    classId: result.classId,
+                    className: result.className,
+                    subclassId: result.subclassId,
+                    subclassName: result.subclassName
+                }
+            }
+            
+            const copy = partyResult
+
+            if (copy !== null) {
+                const newParty = [...copy, newClass]
+                setPartyResult(newParty)
+            }
+            
+        }
         
         const copy = [...selectedParty, name]
         setSelectedParty(copy)

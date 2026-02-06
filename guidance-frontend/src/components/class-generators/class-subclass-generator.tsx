@@ -1,7 +1,9 @@
 import type { Bg3ClassId, Bg3SubclassId } from "../../types/bg3-classes"
 import { getClass, rerollSubclass, getPartyClasses } from "./generator-engine"
 import { useState, useRef } from 'react'
+import { useGeneratorContext } from "../../context-providers/generator-provider"
 import { type PartyMember, type PartyMemberOrNull } from "./party-selector-menu"
+import { type PartymemberRollResult } from "../../context-providers/generator-provider"
 import { useClickOutside } from "../../hooks/use-click-outside"
 import "./class-generator.css"
 import D20svg from '../../assets/ui-icons/d20.svg?react'
@@ -13,18 +15,7 @@ interface RollResult {
     subclassName: string
 }
 
-interface PartymemberRollResult {
-    [x: string]: {
-        memberName: PartyMember
-        classId: Bg3ClassId
-        className: string
-        subclassId: string
-        subclassName: string
-    }
-}
 
-export type PartyRollResult = PartymemberRollResult[]
-export type PartyRollResultOrNull = PartyRollResult | null
 
 interface ClassSubclassProps {
     hasRolled: boolean
@@ -42,7 +33,8 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
         'subclassId': '',
         'subclassName': ''
     })
-    const [partyResult, setPartyResult] = useState<PartyRollResultOrNull>(null)
+
+     const { partyResult, setPartyResult } = useGeneratorContext()
 
     const { className, subclassId, subclassName } = result
 
