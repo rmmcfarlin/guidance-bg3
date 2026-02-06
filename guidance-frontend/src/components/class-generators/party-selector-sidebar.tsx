@@ -35,9 +35,10 @@ const portraitMap: Record<PartyMember, string> = {
 interface PartySelectorSidebarProps {
     selectedParty: PartyMember[]
     setSelectedParty: React.Dispatch<React.SetStateAction<PartyMember[]>>
+    hasRolled: boolean
 }
 
-export const PartySelectorSidebar = ({ selectedParty, setSelectedParty }: PartySelectorSidebarProps) => {
+export const PartySelectorSidebar = ({ selectedParty, setSelectedParty, hasRolled }: PartySelectorSidebarProps) => {
     const ref = useRef<HTMLDivElement>(null)
     const [showPartyDropdown, setShowPartyDropdown] = useState<boolean>(false)
     const [clickedPartymember, setClickedPartymember] = useState<PartyMemberOrNull>(null)
@@ -59,20 +60,7 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty }: PartyS
         }
     }
 
-    const findPartyMember = (member: PartyMember): number => {
-        for (let i = 0; i < selectedParty.length; i++) {
-            if (selectedParty[i] == member) {
-                return i
-            }
-        }
-        console.log("Error: Party member not found for delection")
-        return -1
-    }
-
     const handleRemoveMember = (member: PartyMember) => {
-
-        console.log(`member: ${member}`)
-
         const copy: PartyMember[] = [...selectedParty]
         const filtered: PartyMember[] = copy.filter(char => char !== member)
 
@@ -99,6 +87,7 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty }: PartyS
                 setSelectedParty={setSelectedParty}
                 partyMenuClass={partyMenuClass}
                 setShowPartyDropdown={setShowPartyDropdown}
+                hasRolled={hasRolled}
                 />
         </div>
     )

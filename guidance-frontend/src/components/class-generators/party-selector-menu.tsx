@@ -7,6 +7,7 @@ interface PartySelectorMenuProps {
     setSelectedParty: React.Dispatch<React.SetStateAction<PartyMember[]>>
     partyMenuClass: string
     setShowPartyDropdown: React.Dispatch<React.SetStateAction<boolean>>
+    hasRolled: boolean
 }
 
 export type PartyMember = 
@@ -26,7 +27,7 @@ export type PartyMember =
 export type PartyMemberOrNull = PartyMember | null
 
 
-export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuClass, setShowPartyDropdown }: PartySelectorMenuProps) => {
+export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuClass, setShowPartyDropdown, hasRolled }: PartySelectorMenuProps) => {
 
     const ref = useRef<HTMLDivElement>(null)
     const [partyOptions, setPartyOptions] = useState<PartyMember[]>([
@@ -49,8 +50,11 @@ export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuCl
     const partyDropdownClass = `w-[100%] p-1 flex flex-col`
     const partyButtonClass = "w-full text-text-primary rounded-xl text-center hover:bg-button-hover hover:text-button-text py-4 mt-3"
     
-    const handleNewPartyMember = (name: PartyMember) => {       
-        setSelectedParty([...selectedParty, name])
+    const handleNewPartyMember = (name: PartyMember) => {  
+        
+        const copy = [...selectedParty, name]
+        setSelectedParty(copy)
+        
         setShowPartyDropdown(false)
 
         if (name !== "Tav") {

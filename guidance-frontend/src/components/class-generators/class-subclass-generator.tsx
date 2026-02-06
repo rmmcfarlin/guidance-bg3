@@ -27,13 +27,14 @@ export type PartyRollResult = PartymemberRollResult[]
 export type PartyRollResultOrNull = PartyRollResult | null
 
 interface ClassSubclassProps {
+    hasRolled: boolean
+    setHasRolled: React.Dispatch<React.SetStateAction<boolean>>
     selectedParty: PartyMember[]
     setSelectedParty: React.Dispatch<React.SetStateAction<PartyMember[]>>
 }
 
-export const ClassSubclassGenerator = ({ selectedParty, setSelectedParty }: ClassSubclassProps) => {
+export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty, setSelectedParty }: ClassSubclassProps) => {
     const ref = useRef<HTMLDivElement>(null)
-    const [hasRolled, setHasRolled] = useState<boolean>(false)
     const [showReroll, setShowReroll] = useState<PartyMemberOrNull>(null)
     const [result, setResult] = useState<RollResult>({
         'classId': 'cleric',
@@ -153,6 +154,7 @@ export const ClassSubclassGenerator = ({ selectedParty, setSelectedParty }: Clas
     const buttonSecondaryClass: string = `${hasRolled ? '' : 'hidden'} bg-button-secondary text-button-text-dark rounded-xl hover:bg-button-secondary-hover`
     const rerollIconClass: string = `w-[20px] stroke-text-primary stroke-20`
     
+    console.log(partyResult)
     return (
         <div className="flex bg-background-generator-primary w-[80%] p-2 lg:pt-10 lg:p-3 lg:px-10 justify-center items-center rounded-xl">
             {selectedParty.length == 1 ? (

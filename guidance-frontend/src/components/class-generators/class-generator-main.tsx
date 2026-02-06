@@ -7,7 +7,7 @@ import { type PartyMember } from "./party-selector-menu"
 export type GeneratorTabs = "Class" | "Build" | "Character" | "Complete"
 
 export const ClassGeneratorMain = ({}) => {
-
+    const [hasRolled, setHasRolled] = useState<boolean>(false)
     const [selectedTab, setSelectedTab] = useState<GeneratorTabs>("Class")
     const generatorTabs: GeneratorTabs[] = [
         "Class",
@@ -36,7 +36,9 @@ export const ClassGeneratorMain = ({}) => {
         if (selectedTab == "Class") {
             return <ClassSubclassGenerator
                     selectedParty={selectedParty}
-                    setSelectedParty={setSelectedParty} 
+                    setSelectedParty={setSelectedParty}
+                    hasRolled={hasRolled}
+                    setHasRolled={setHasRolled} 
                  />
         }
     }
@@ -54,7 +56,8 @@ export const ClassGeneratorMain = ({}) => {
             <div className="flex">
                 <PartySelectorSidebar
                     selectedParty={selectedParty}
-                    setSelectedParty={setSelectedParty} 
+                    setSelectedParty={setSelectedParty}
+                    hasRolled={hasRolled} 
                 />
                 <div id="generator-content-main" className="flex justify-center h-full w-[90vw] lg:w-full rounded-xl drop-shadow-xl my-auto">
                     {renderContent()}
