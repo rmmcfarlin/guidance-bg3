@@ -15,7 +15,7 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
-    const [mainTheme, setMainTheme] = useState<MainTheme>("light")
+    const [mainTheme, setMainTheme] = useState<MainTheme>("dark")
     const [accentTheme, setAccentTheme] = useState<AccentTheme>('cleric')
 
     useEffect(() => {
