@@ -10,9 +10,9 @@ interface AppMainProps {
 }
 
 
-export const AppMain = ({ themeProps, settingsProps }: AppMainProps) => {
+export const AppMain = ({ settingsProps }: AppMainProps) => {
 
-    const [appContent, setAppContent] = useState("classGenerator")
+    const [appContent] = useState("classGenerator")
 
     const renderContent = () => {
         if (appContent == "classGenerator") {

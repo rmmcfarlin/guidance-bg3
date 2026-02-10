@@ -48,13 +48,11 @@ export function getPartyClasses (party: PartyMember[]) {
     let rolledSubclass = randItem(Object.keys(subclasses))
 
     let memberResult = {
-      [party[i]]: {
         memberName: party[i],
         classId: rolledClass,
         className: BG3_Classes.classes[rolledClass].name,
         subclassId: rolledSubclass,
         subclassName: subclasses[rolledSubclass].name 
-      }
     }
 
     result.push(memberResult)

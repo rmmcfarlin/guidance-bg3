@@ -13,13 +13,11 @@ export interface GeneratorContext {
 }
 
 export interface PartymemberRollResult {
-    [x: string]: {
         memberName: PartyMember
         classId: Bg3ClassId
         className: string
         subclassId: string
         subclassName: string
-    }
 }
 
 export type PartyRollResult = PartymemberRollResult[]

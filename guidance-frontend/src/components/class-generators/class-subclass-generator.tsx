@@ -1,12 +1,16 @@
 import type { Bg3ClassId, Bg3SubclassId } from "../../types/bg3-classes"
 import { getClass, rerollSubclass, getPartyClasses } from "./generator-engine"
 import { useState, useRef } from 'react'
-import { useGeneratorContext } from "../../context-providers/generator-provider"
+import { useGeneratorContext, type PartyRollResult } from "../../context-providers/generator-provider"
 import { type PartyMember, type PartyMemberOrNull } from "./party-selector-menu"
 import { type PartymemberRollResult } from "../../context-providers/generator-provider"
 import { useClickOutside } from "../../hooks/use-click-outside"
 import "./class-generator.css"
 import D20svg from '../../assets/ui-icons/d20.svg?react'
+import LockedIcon from '../../assets/ui-icons/locked.svg?react'
+import UnlockedGapIcon from '../../assets/ui-icons/unlocked-gap.svg?react'
+import UnlockedSideIcon from '../../assets/ui-icons/unlocked-side.svg?react'
+
 
 interface RollResult {
     classId: Bg3ClassId
@@ -14,8 +18,6 @@ interface RollResult {
     subclassId: string
     subclassName: string
 }
-
-
 
 interface ClassSubclassProps {
     hasRolled: boolean
@@ -33,8 +35,8 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
         'subclassId': '',
         'subclassName': ''
     })
-
-     const { partyResult, setPartyResult } = useGeneratorContext()
+    const [lockedMembers, setLockedMembers] = useState<PartyMember[]>([])
+    const { partyResult, setPartyResult } = useGeneratorContext()
 
     const { className, subclassId, subclassName } = result
 
@@ -56,8 +58,48 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
     }
 
     const handleRollParty = (party: PartyMember[]) => {
-        const result = getPartyClasses(party)
-        setPartyResult(result)
+
+        const copy = party
+        const getUnlockedMembers = (copy: PartyMember[]) => {
+            const filtered: PartyMember[] = []
+            for (let i = 0; i < copy.length; i++) {
+                if (!lockedMembers.includes(copy[i])) {
+                    filtered.push(copy[i])
+                }
+            }
+            return filtered
+        }
+
+        const unlockedMembers: PartyMember[]= getUnlockedMembers(copy)
+        const result: PartyRollResult = getPartyClasses(unlockedMembers)
+
+        if (!hasRolled) {
+            setPartyResult(result)
+        }
+        
+        if (partyResult) {
+            const combinedResult = partyResult.map(obj => {
+                const name: PartyMember = obj.memberName
+                if (unlockedMembers.includes(name)) {
+                    const match = result.find(
+                        r => r.memberName === name
+                    )
+                    if (match) {
+                        return match
+                    }
+                    console.log("Error: no match for unlocked member in party result")
+                    return obj
+                } else {
+                    return obj
+                }
+            })
+
+            if (combinedResult ) {
+                setPartyResult(combinedResult)
+            } else {
+                console.log("Error: combined locked / unlocked result is undefined")
+            }
+        }
         setHasRolled(true)
     }
 
@@ -65,18 +107,16 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
         const result = getClass()
 
         const newClass: PartymemberRollResult = {
-            [member]: {
                 memberName: member,
                 classId: result.classId,
                 className: result.className,
                 subclassId: result.subclassId,
                 subclassName: result.subclassName
             }
-        }
 
         if (partyResult) {
             const newParty = partyResult.map(obj => {
-                if (obj[member]) {
+                if (obj.memberName == member) {
                     return newClass
                 } else {
                     return obj
@@ -90,18 +130,16 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
 
         const result = rerollSubclass(cls)
         const newClass: PartymemberRollResult = {
-            [member]: {
                 memberName: member,
                 classId: result.classId,
                 className: result.className,
                 subclassId: result.subclassId,
                 subclassName: result.subclassName
-            }
         }
 
         if (partyResult) {
             const newParty = partyResult.map(obj => {
-                if (obj[member]) {
+                if (obj.memberName == member) {
                     return newClass
                 } else {
                     return obj
@@ -135,6 +173,22 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
         }
     }
 
+    const handleLockPartymember = (member: PartyMember) => {
+        const copy = [...lockedMembers, member]
+        setLockedMembers(copy)
+    }
+
+    const handleUnlockPartymember = (member: PartyMember) => {
+        const copy = lockedMembers
+        const filtered = copy.filter(mbr => mbr !== member)
+
+        setLockedMembers(filtered)
+    }
+
+    const getLockIcon = (member: PartyMember) => {
+        return lockedMembers.includes(member)
+    }
+
     const iconPath = getIcon(subclassId)
     const useIcon = new URL(`${iconPath}`, import.meta.url).href
 
@@ -145,8 +199,9 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
     const buttonPrimaryClass: string = "bg-button-primary text-button-text rounded-xl text-center text-xl font-bold hover:bg-button-hover"
     const buttonSecondaryClass: string = `${hasRolled ? '' : 'hidden'} bg-button-secondary text-button-text-dark rounded-xl hover:bg-button-secondary-hover`
     const rerollIconClass: string = `w-[20px] stroke-text-primary stroke-20`
+    const unlockedIconClass: string = `size-[20px] stroke-text-primary stroke-15 ml-4`
+    const lockedIconClass: string = `size-[20px] stroke-text-primary stroke-10 ml-4 fill-text-primary`
     
-    console.log(partyResult)
     return (
         <div className="flex bg-background-generator-primary w-[80%] p-2 lg:pt-10 lg:p-3 lg:px-10 justify-center items-center rounded-xl">
             {selectedParty.length == 1 ? (
@@ -169,8 +224,7 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
 
                         const index = selectedParty.indexOf(member)
                         const memberKey = member
-                        const memberData = partyResult[index][memberKey]
-
+                        const memberData = partyResult[index]
                         const memberClassId = memberData.classId
                         const memberClassName = memberData.className
                         const memberSubclassId = memberData.subclassId
@@ -180,6 +234,7 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
                         const useIcon = new URL(`${iconPath}`, import.meta.url).href
 
                         const rerollDropdownClass = handleRerollDropdownClass(member)
+                        const locked = getLockIcon(member)
 
                         return (
                             <div key={`${member}-output`} className={`partymember-class-output-wrapper ${partymemberOutputClass}`}>
@@ -191,8 +246,16 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
                                         <p className="text-text-primary text-xs lg:text-xl">{memberSubclassName}</p>
                                     </div>
                                 </div>
-                                <div className="relative">
-                                    <D20svg className={rerollIconClass} onClick={() => handleSetRerollDropdown(member)} />
+                                <div className="relative w-[10%] justify-items-end">
+                                    <div className="flex">
+                                        <D20svg className={rerollIconClass} onClick={() => handleSetRerollDropdown(member)} />
+                                        {locked ? (
+                                            <LockedIcon className={lockedIconClass} onClick={() => handleUnlockPartymember(member)}/>
+                                        ) : (
+                                            <UnlockedSideIcon className={unlockedIconClass} onClick={() => handleLockPartymember(member)}/>
+                                        )
+                                        }                                
+                                    </div>
                                     <div className={rerollDropdownClass}>
                                         <p className="text-text-primary text-bold">Reroll</p>
                                         <button onClick={() => handleRerollPartymember(member)} className={`${buttonPrimaryClass} w-10 xl:w-25 text-xs mb-2 font-normal`}>Class</button>

@@ -3,7 +3,7 @@ import { useRef, useState } from "react"
 import { OptionDropdown } from "../ui-components/option-dropdown"
 import { useGeneratorContext } from "../../context-providers/generator-provider"
 import { getClass } from "./generator-engine"
-import { type PartymemberRollResult, type PartyRollResultOrNull } from "../../context-providers/generator-provider"
+import { type PartymemberRollResult } from "../../context-providers/generator-provider"
 
 interface PartySelectorMenuProps {
     selectedParty: PartyMember[]
@@ -60,14 +60,12 @@ export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuCl
             const result = getClass()
 
             const newClass: PartymemberRollResult = {
-                [name]: {
                     memberName: name,
                     classId: result.classId,
                     className: result.className,
                     subclassId: result.subclassId,
                     subclassName: result.subclassName
                 }
-            }
             
             const copy = partyResult
 
