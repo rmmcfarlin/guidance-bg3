@@ -1,6 +1,7 @@
 import { SelectableTabs } from "../ui-components/selectable-tabs/selectable-tabs"
 import { useState } from 'react'
 import { ClassSubclassGenerator } from "./class-subclass-generator"
+import { CharacterGenerator } from "./character-generator"
 import { PartySelectorSidebar } from "./party-selector-sidebar"
 import { useGeneratorContext } from "../../context-providers/generator-provider"
 
@@ -11,9 +12,8 @@ export const ClassGeneratorMain = ({}) => {
     const [selectedTab, setSelectedTab] = useState<GeneratorTabs>("Class")
     const generatorTabs: GeneratorTabs[] = [
         "Class",
-        "Build",
         "Character",
-        "Complete"
+        "Build"
     ]
 
     const { hasRolled, setHasRolled, selectedParty, setSelectedParty, partyResult, setPartyResult } = useGeneratorContext()
@@ -39,6 +39,9 @@ export const ClassGeneratorMain = ({}) => {
                     hasRolled={hasRolled}
                     setHasRolled={setHasRolled} 
                  />
+        } else if (selectedTab == "Character") {
+            return <CharacterGenerator 
+                        />
         }
     }
 

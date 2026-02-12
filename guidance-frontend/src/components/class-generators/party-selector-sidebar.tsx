@@ -70,7 +70,7 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty, hasRolle
     useClickOutside(ref, () => setClickedPartymember(null))
 
     return(
-        <div ref={ref} id="party-selector-sidebar" className="flex flex-col w-[8%] ml-5 lg:ml-0 lg:absolute lg:left-10 items-center">
+        <div ref={ref} id="party-selector-sidebar" className="flex flex-col w-[8%] ml-5 lg:ml-0 lg:pt-10 lg:absolute lg:left-10 items-center">
             {selectedParty.map(member => {
                 return (
                     <div className={portraitWrapper} key={member}>

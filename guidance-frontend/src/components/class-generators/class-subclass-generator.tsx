@@ -8,7 +8,6 @@ import { useClickOutside } from "../../hooks/use-click-outside"
 import "./class-generator.css"
 import D20svg from '../../assets/ui-icons/d20.svg?react'
 import LockedIcon from '../../assets/ui-icons/locked.svg?react'
-import UnlockedGapIcon from '../../assets/ui-icons/unlocked-gap.svg?react'
 import UnlockedSideIcon from '../../assets/ui-icons/unlocked-side.svg?react'
 
 
@@ -192,7 +191,7 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
     const iconPath = getIcon(subclassId)
     const useIcon = new URL(`${iconPath}`, import.meta.url).href
 
-    const partymemberOutputClass: string = "flex items-center w-full p-2 border-b-1 border-b-text-primary justify-between lg:justify-evenly"
+    const partymemberOutputClass: string = "flex items-center w-full lg:h-[113px] p-2 border-b-1 border-b-text-primary justify-between lg:justify-evenly"
     const partyRollButtonClass: string = "bg-button-primary text-button-text w-50 mt-5 rounded-xl py-4 text-center text-xl font-bold hover:bg-button-hover"
     const partymemberIconClass: string = "size-[50px] lg:size-[100px]"
 
@@ -213,7 +212,7 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
                         </div>
                         <div className="flex flex-col items-center mt-10">
                             <button onClick={() => handleRollClass()} className={`${buttonPrimaryClass} w-50 py-4`}>{hasRolled ? 'Reroll' : 'Roll'}</button>
-                            <button onClick={() => handleRerollSubclass(result.classId)} className={`${buttonSecondaryClass} w-40 py-3 mt-3`}>Reroll Subclass</button>
+                            <button onClick={() => handleRerollSubclass(result.classId)} className={`${buttonSecondaryClass} w-40 py-3 mt-3 border-[2px] border-button-primary`}>Reroll Subclass</button>
                         </div>
                     </div>
             ) : (
