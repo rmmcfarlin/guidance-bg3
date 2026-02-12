@@ -196,27 +196,14 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
     const partymemberIconClass: string = "size-[50px] lg:size-[100px]"
 
     const buttonPrimaryClass: string = "bg-button-primary text-button-text rounded-xl text-center text-xl font-bold hover:bg-button-hover"
-    const buttonSecondaryClass: string = `${hasRolled ? '' : 'hidden'} bg-button-secondary text-button-text-dark rounded-xl hover:bg-button-secondary-hover`
+    const buttonSecondaryClass: string = `${hasRolled ? '' : 'hidden'} ${selectedParty.length == 1 ? '' : 'hidden'} bg-button-secondary text-button-text-dark rounded-xl hover:bg-button-secondary-hover`
     const rerollIconClass: string = `w-[20px] stroke-text-primary stroke-20`
     const unlockedIconClass: string = `size-[20px] stroke-text-primary stroke-15 ml-4`
     const lockedIconClass: string = `size-[20px] stroke-text-primary stroke-10 ml-4 fill-text-primary`
-    
+
     return (
-        <div className="flex bg-background-generator-primary w-[80%] p-2 lg:pt-10 lg:p-3 lg:px-10 justify-center items-center rounded-xl">
-            {selectedParty.length == 1 ? (
-                    <div id="class-stats-panel" className="flex flex-col w-full items-center">
-                        <img src={useIcon} className="w-[200px]"></img>
-                        <div className="flex flex-col items-center">
-                            <span className="text-text-primary font-bold text-4xl">{hasRolled ? className : ' '}</span>
-                            <span className="text-text-secondary text-3xl mt-2">{hasRolled ? subclassName : ' '}</span>
-                        </div>
-                        <div className="flex flex-col items-center mt-10">
-                            <button onClick={() => handleRollClass()} className={`${buttonPrimaryClass} w-50 py-4`}>{hasRolled ? 'Reroll' : 'Roll'}</button>
-                            <button onClick={() => handleRerollSubclass(result.classId)} className={`${buttonSecondaryClass} w-40 py-3 mt-3 border-[2px] border-button-primary`}>Reroll Subclass</button>
-                        </div>
-                    </div>
-            ) : (
-                <div className="flex flex-col items-center w-full" ref={ref}>
+    <div className="flex bg-background-generator-primary w-[80%] p-2 lg:pt-10 lg:p-3 lg:px-10 justify-center items-center rounded-xl">
+            <div className="flex flex-col items-center w-full" ref={ref}>
                     {selectedParty.map(member => {
 
                         if (!partyResult) return null
@@ -235,6 +222,18 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
                         const rerollDropdownClass = handleRerollDropdownClass(member)
                         const locked = getLockIcon(member)
 
+                        if (selectedParty.length == 1) {
+                            return (
+                                <div id="class-stats-panel" className="flex flex-col w-full items-center">
+                                    <img src={useIcon} className="w-[200px]"></img>
+                                    <div className="flex flex-col items-center">
+                                        <span className="text-text-primary font-bold text-4xl">{hasRolled ? memberClassName : ' '}</span>
+                                        <span className="text-text-secondary text-3xl mt-2">{hasRolled ? memberSubclassName : ' '}</span>
+                                    </div>
+                                    <button onClick={() => handleRerollPartymemberSubclass(member, memberClassId)} className={`${buttonSecondaryClass} w-40 py-3 mt-3 border-[2px] border-button-primary`}>Reroll Subclass</button>
+                                </div>
+                            )   
+                        }
                         return (
                             <div key={`${member}-output`} className={`partymember-class-output-wrapper ${partymemberOutputClass}`}>
                                 <p className="text-text-primary w-[10%] xl:w-[25%] font-bold text-center text-xs lg:text-xl">{member}</p>
@@ -266,7 +265,6 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
                     })}
                     <button className={partyRollButtonClass} onClick={() => handleRollParty(selectedParty)}>{hasRolled ? 'Reroll' : 'Roll'}</button>
                 </div>
-            )}
         </div>
     )
 }

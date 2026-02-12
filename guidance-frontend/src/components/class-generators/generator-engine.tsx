@@ -106,7 +106,7 @@ export function getCharacter (party: PartyMember[])  {
 
       result.push(memberResult)
     } else {
-      let memberResult = originCharBackgrounds[party[i]]
+      let memberResult = companionBackgrounds[party[i]]
       result.push(memberResult)
     }
   }
