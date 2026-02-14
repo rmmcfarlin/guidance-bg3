@@ -1,5 +1,5 @@
 import { useClickOutside } from "../../hooks/use-click-outside"
-import { useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import { OptionDropdown } from "../ui-components/option-dropdown"
 import { useGeneratorContext } from "../../context-providers/generator-provider"
 import { getClass } from "./generator-engine"
@@ -11,6 +11,8 @@ interface PartySelectorMenuProps {
     partyMenuClass: string
     setShowPartyDropdown: React.Dispatch<React.SetStateAction<boolean>>
     hasRolled: boolean
+    partyOptions: PartyMember[]
+    setPartyOptions: React.Dispatch<React.SetStateAction<PartyMember[]>>
 }
 
 export type PartyMember = 
@@ -30,24 +32,11 @@ export type PartyMember =
 export type PartyMemberOrNull = PartyMember | null
 
 
-export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuClass, setShowPartyDropdown, hasRolled }: PartySelectorMenuProps) => {
+export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuClass, setShowPartyDropdown, hasRolled, partyOptions, setPartyOptions }: PartySelectorMenuProps) => {
 
-    const { partyResult, setPartyResult } = useGeneratorContext()
+    const { partyResult, setPartyResult, tavCounter, setTavCounter } = useGeneratorContext()
     const ref = useRef<HTMLDivElement>(null)
-    const [partyOptions, setPartyOptions] = useState<PartyMember[]>([
-        "Tav", 
-        "Durge", 
-        "Astarion", 
-        "Gale", 
-        "Karlach", 
-        "Wyll", 
-        "Laezel", 
-        "Shadowheart", 
-        "Minthara", 
-        "Halsin", 
-        "Jaheira", 
-        "Minsc"
-    ])
+
 
     useClickOutside(ref, () => setShowPartyDropdown(false))
 
@@ -55,6 +44,7 @@ export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuCl
     const partyButtonClass = "w-full text-text-primary rounded-xl text-center hover:bg-button-hover hover:text-button-text py-4 mt-3"
     
     const handleNewPartyMember = (name: PartyMember) => {
+
 
         if (hasRolled) {
             const result = getClass()

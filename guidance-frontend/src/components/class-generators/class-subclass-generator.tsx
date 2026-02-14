@@ -94,12 +94,15 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
             })
 
             if (combinedResult ) {
+                
+                console.log(combinedResult)
                 setPartyResult(combinedResult)
             } else {
                 console.log("Error: combined locked / unlocked result is undefined")
             }
         }
         setHasRolled(true)
+
     }
 
     const handleRerollPartymember = (member: PartyMember) => {
@@ -196,7 +199,7 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
     const partymemberIconClass: string = "size-[50px] lg:size-[100px]"
 
     const buttonPrimaryClass: string = "bg-button-primary text-button-text rounded-xl text-center text-xl font-bold hover:bg-button-hover"
-    const buttonSecondaryClass: string = `${hasRolled ? '' : 'hidden'} ${selectedParty.length == 1 ? '' : 'hidden'} bg-button-secondary text-button-text-dark rounded-xl hover:bg-button-secondary-hover`
+    const buttonSecondaryClass: string = `${hasRolled ? '' : 'hidden'} bg-button-secondary text-button-text-dark rounded-xl hover:bg-button-secondary-hover`
     const rerollIconClass: string = `w-[20px] stroke-text-primary stroke-20`
     const unlockedIconClass: string = `size-[20px] stroke-text-primary stroke-15 ml-4`
     const lockedIconClass: string = `size-[20px] stroke-text-primary stroke-10 ml-4 fill-text-primary`
@@ -209,7 +212,6 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
                         if (!partyResult) return null
 
                         const index = selectedParty.indexOf(member)
-                        const memberKey = member
                         const memberData = partyResult[index]
                         const memberClassId = memberData.classId
                         const memberClassName = memberData.className
@@ -224,7 +226,7 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
 
                         if (selectedParty.length == 1) {
                             return (
-                                <div id="class-stats-panel" className="flex flex-col w-full items-center">
+                                <div key={`${member}-${index}-output`} id="class-stats-panel" className="flex flex-col w-full items-center">
                                     <img src={useIcon} className="w-[200px]"></img>
                                     <div className="flex flex-col items-center">
                                         <span className="text-text-primary font-bold text-4xl">{hasRolled ? memberClassName : ' '}</span>
@@ -235,7 +237,7 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
                             )   
                         }
                         return (
-                            <div key={`${member}-output`} className={`partymember-class-output-wrapper ${partymemberOutputClass}`}>
+                            <div key={`${member}-${index}-output`} className={`partymember-class-output-wrapper ${partymemberOutputClass}`}>
                                 <p className="text-text-primary w-[10%] xl:w-[25%] font-bold text-center text-xs lg:text-xl">{member}</p>
                                 <div className="flex items-center justify-left w-[50%] lg:w-[50%] xl:w-[300px]">
                                     <img src={useIcon} className={partymemberIconClass}></img>

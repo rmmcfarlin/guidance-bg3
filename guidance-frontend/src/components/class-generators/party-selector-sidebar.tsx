@@ -3,6 +3,7 @@ import PlusCurved from '../../assets/ui-icons/plus-curved.svg?react'
 import { PartySelectorMenu } from './party-selector-menu'
 import { type PartyMember, type PartyMemberOrNull } from './party-selector-menu'
 import { useClickOutside } from '../../hooks/use-click-outside'
+import { useGeneratorContext, type PartyResult, type PartyRollResultOrNull } from '../../context-providers/generator-provider'
 import Astarion from '../../assets/character-portraits/portrait-Astarion.png'
 import Wyll from '../../assets/character-portraits/portrait-Wyll.png'
 import Karlach from '../../assets/character-portraits/portrait-Karlach.png'
@@ -42,6 +43,22 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty, hasRolle
     const ref = useRef<HTMLDivElement>(null)
     const [showPartyDropdown, setShowPartyDropdown] = useState<boolean>(false)
     const [clickedPartymember, setClickedPartymember] = useState<PartyMemberOrNull>(null)
+    const [partyOptions, setPartyOptions] = useState<PartyMember[]>([
+            "Tav", 
+            "Durge", 
+            "Astarion", 
+            "Gale", 
+            "Karlach", 
+            "Wyll", 
+            "Laezel", 
+            "Shadowheart", 
+            "Minthara", 
+            "Halsin", 
+            "Jaheira", 
+            "Minsc"
+        ])
+
+    const { partyResult, setPartyResult } = useGeneratorContext()
     
 
     const portraitWrapper: string = "w-[50px] lg:w-[75px] p-0.5 bg-background-portrait flex flex-col items-center mb-5"
@@ -63,17 +80,31 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty, hasRolle
     const handleRemoveMember = (member: PartyMember) => {
         const copy: PartyMember[] = [...selectedParty]
         const filtered: PartyMember[] = copy.filter(char => char !== member)
-
         setSelectedParty(filtered)
+
+        if (partyResult) {
+            const resCopy: PartyRollResultOrNull = partyResult
+            const resFiltered: PartyRollResultOrNull = resCopy.filter(char => char.memberName !== member)
+            setPartyResult(resFiltered)
+        }
+
+        let optionsCopy = partyOptions
+        optionsCopy = [...optionsCopy, member]
+        setPartyOptions(optionsCopy)
+
     }
 
     useClickOutside(ref, () => setClickedPartymember(null))
 
+    let i = 0
+
     return(
         <div ref={ref} id="party-selector-sidebar" className="flex flex-col w-[8%] ml-5 lg:ml-0 lg:pt-10 lg:absolute lg:left-10 items-center">
             {selectedParty.map(member => {
+                const index = selectedParty.indexOf(member)
+                i = i += 1
                 return (
-                    <div className={portraitWrapper} key={member}>
+                    <div className={portraitWrapper} key={`${member}-${i}`}>
                         <img src={portraitMap[member]} className={characterPortraitIcon} onClick={() => setClickedPartymember(member)}></img>
                         <button id={`${member} delete button`} className={getRemoveButtonClass(member)} onClick={() => handleRemoveMember(member)}>X</button>
                     </div>
@@ -88,6 +119,8 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty, hasRolle
                 partyMenuClass={partyMenuClass}
                 setShowPartyDropdown={setShowPartyDropdown}
                 hasRolled={hasRolled}
+                partyOptions={partyOptions}
+                setPartyOptions={setPartyOptions}
                 />
         </div>
     )

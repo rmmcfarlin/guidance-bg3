@@ -1,3 +1,19 @@
+import { type Bg3ClassId } from "../../types/bg3-classes"
+import { type Bg3PlayableRaceId } from "../../types/bg3-races"
+import { type Bg3BackgroundId } from "../../types/bg3-backgrounds"
+
+
+export interface CharacterRollResult {
+    classId: Bg3ClassId
+    className: string
+    subclassId: string
+    subclassName: string
+    raceId: Bg3PlayableRaceId
+    raceName: string
+    backgroundId: Bg3BackgroundId
+    backgroundName: string
+}
+
 
 export const CharacterGenerator = ({}) => {
 
