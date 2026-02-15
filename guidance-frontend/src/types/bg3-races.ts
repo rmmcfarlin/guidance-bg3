@@ -1,4 +1,4 @@
-import { type PartyMember } from "../components/class-generators/party-selector-menu"
+import { type CompanionName } from "../context-providers/generator-provider"
 import type { Bg3BackgroundId } from "./bg3-backgrounds"
 
 interface Race {
@@ -95,7 +95,7 @@ export type Bg3PlayableRaceId =
   | Bg3RaceId
   | AllSubraceIds
 
-type AllSubraceIds = {
+export type AllSubraceIds = {
   [R in Bg3RaceId]: keyof typeof Bg3_Races[R]["subraces"]
 }[Bg3RaceId]
 
@@ -107,77 +107,71 @@ export interface CompanionBackground {
     backgroundName: string
 }
 
-export const companionBackgrounds: Record<PartyMember, CompanionBackground> = {
-    "Astarion": {
+export const companionBackgrounds: Record<string, CompanionBackground> = {
+    "astarion": {
         "raceId": "high-elf",
         "raceName": "High Elf",
         "backgroundId": "charlatan",
         "backgroundName": "Charlatan"
     },
-    "Gale": {
+    "gale": {
         "raceId": "human",
         "raceName": "Human",
         "backgroundId": "sage",
         "backgroundName": "Sage"
     },
-    "Laezel": {
+    "laezel": {
         "raceId": "githyanki",
         "raceName": "Githyanki",
         "backgroundId": "soldier",
         "backgroundName": "Soldier"
     },
-    "Karlach": {
+    "karlach": {
         "raceId": "zariel",
         "raceName": "Zariel Tiefling",
         "backgroundId": "outlander",
         "backgroundName": "Outlander"
     },
-    "Shadowheart": {
+    "shadowheart": {
         "raceId": "half-high",
         "raceName": "High Half-Elf",
         "backgroundId": "acolyte",
         "backgroundName": "Acolyte"
     },
-    "Wyll": {
+    "wyll": {
         "raceId": "human",
         "raceName": "Human",
         "backgroundId": "folk-hero",
         "backgroundName": "Folk Hero"
     },
-    "Minthara": {
+    "minthara": {
         "raceId": "lolth",
         "raceName": "Lolth Sworn Drow",
         "backgroundId": "noble",
         "backgroundName": "Noble"
     },
-    "Jaheira": {
+    "jaheira": {
         "raceId": "high-half",
         "raceName": "High Half-Elf",
         "backgroundId": "soldier",
         "backgroundName": "Soldier"
     },
-    "Minsc": {
+    "minsc": {
         "raceId": "human",
         "raceName": "Human",
         "backgroundId": "folk-hero",
         "backgroundName": "Folk Hero"
     }, 
-    "Halsin": {
+    "halsin": {
         "raceId": "wood-elf",
         "raceName": "Wood Elf",
         "backgroundId": "outlander",
         "backgroundName": "Outlander"
     }, 
-    "Durge": {
+    "durge": {
         "raceId": "white",
         "raceName": "White Dragonborn",
         "backgroundId": "haunted-one",
         "backgroundName": "Haunted One"
-    },
-    "Tav": {
-        "raceId": "high-elf",
-        "raceName": "High Elf",
-        "backgroundId": "charlatan",
-        "backgroundName": "Charlatan"
     }
 }

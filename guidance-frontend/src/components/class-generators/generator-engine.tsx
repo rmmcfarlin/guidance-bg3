@@ -1,13 +1,14 @@
-import { BG3_Classes, type Bg3ClassId, type Bg3SubclassId } from '../../types/bg3-classes'
-import { type PartyMember } from './party-selector-menu'
-import { Bg3_Races, type Bg3SubraceId, type Bg3RaceId, companionBackgrounds } from "../../types/bg3-races"
+import { BG3_Classes, type Bg3ClassId } from '../../types/bg3-classes'
+import { type PartyMember } from '../../types/bg3-partymember'
+import { Bg3_Races, type Bg3RaceId, companionBackgrounds } from "../../types/bg3-races"
 import { Bg3_Backgrounds, type Bg3BackgroundId } from "../../types/bg3-backgrounds"
+import { companionNames } from '../../context-providers/generator-provider'
 
 function randItem<T>(arr: readonly T[]): T {
     return arr[Math.floor(Math.random() * arr.length)]
 }
 
-const classArr: Bg3ClassId[] = Object.keys(BG3_Classes.classes) as Bg3ClassId[]
+const classArr: Bg3ClassId[] = Object.keys(BG3_Classes) as Bg3ClassId[]
 const raceArr: Bg3RaceId[] = Object.keys(Bg3_Races) as Bg3RaceId[]
 const backgroundArr: Bg3BackgroundId[] = Object.keys(Bg3_Backgrounds) as Bg3BackgroundId[]
 
@@ -15,14 +16,12 @@ const backgroundArr: Bg3BackgroundId[] = Object.keys(Bg3_Backgrounds) as Bg3Back
 export function getClass() {
   const rolledClass = randItem(classArr)
 
-  const subclasses =
-    BG3_Classes.classes[rolledClass].subclasses as Record<string, { name: string }>
-
+  const subclasses = BG3_Classes[rolledClass].subclasses as (Record<string, { name: string }>)
   const rolledSubclass = randItem(Object.keys(subclasses))
 
   return {
     classId: rolledClass,
-    className: BG3_Classes.classes[rolledClass].name,
+    className: BG3_Classes[rolledClass].name,
     subclassId: rolledSubclass,
     subclassName: subclasses[rolledSubclass].name,
   }
@@ -30,12 +29,12 @@ export function getClass() {
 
 export function rerollSubclass (cls: Bg3ClassId) {
 
-  const subclasses = BG3_Classes.classes[cls].subclasses as Record<string, {name: string}>
+  const subclasses = BG3_Classes[cls].subclasses as (Record<string, { name: string }>)
   const rolledSubclass = randItem(Object.keys(subclasses))
 
   return {
     classId: cls,
-    className: BG3_Classes.classes[cls].name,
+    className: BG3_Classes[cls].name,
     subclassId: rolledSubclass,
     subclassName: subclasses[rolledSubclass].name
   }
@@ -48,13 +47,14 @@ export function getPartyClasses (party: PartyMember[]) {
 
   for (let i = 0; i < party.length; i++) {
     let rolledClass = randItem(classArr)
-    let subclasses = BG3_Classes.classes[rolledClass].subclasses as Record<string, { name: string }>
+    let subclasses = BG3_Classes[rolledClass].subclasses as Record<string, { name: string }>
     let rolledSubclass = randItem(Object.keys(subclasses))
 
     let memberResult = {
-        memberName: party[i],
+        characterId: party[i].characterId,
+        displayName: party[i].displayName,
         classId: rolledClass,
-        className: BG3_Classes.classes[rolledClass].name,
+        className: BG3_Classes[rolledClass].name,
         subclassId: rolledSubclass,
         subclassName: subclasses[rolledSubclass].name 
     }
@@ -65,14 +65,15 @@ export function getPartyClasses (party: PartyMember[]) {
   return result
 }
 
-export function getCharacter (party: PartyMember[])  {
+export function getCharacters (party: PartyMember[])  {
 
   let result = []
-  const includesDurge = party.includes("Durge")
+  const partyIds = party.map(mbr => mbr.characterId)
+  const includesDurge = partyIds.includes("durge")
 
   for (let i = 0; i < party.length; i++) {
 
-    if (party[i] == "Tav") {
+    if (!companionNames.includes(party[i].displayName)) {
       let rolledRace = randItem(raceArr)
       let raceName = Bg3_Races[rolledRace].name
       let raceId = rolledRace
@@ -106,7 +107,7 @@ export function getCharacter (party: PartyMember[])  {
 
       result.push(memberResult)
     } else {
-      let memberResult = companionBackgrounds[party[i]]
+      let memberResult = companionBackgrounds[party[i].characterId]
       result.push(memberResult)
     }
   }

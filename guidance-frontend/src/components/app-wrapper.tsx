@@ -20,11 +20,6 @@ export interface SettingsProps {
     settingsTab: SettingsTabOption,
     setSettingsTab: (option: SettingsTabOption) => void,
 }
-
-interface AppWrapperClasses {
-    appWrapperBgDark: string,
-    appWrapperBgLight: string
-}
  
 export const AppWrapper = ({}) => {
     

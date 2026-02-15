@@ -1,5 +1,4 @@
 import PrismIcon from '../assets/prism.svg?react'
-import { useTheme } from '../context-providers/theme-provider'
 
 export const Header = ({ }) => {
 

@@ -1,40 +1,21 @@
 import { useClickOutside } from "../../hooks/use-click-outside"
-import React, { useRef, useState } from "react"
+import React, { useRef } from "react"
 import { OptionDropdown } from "../ui-components/option-dropdown"
-import { useGeneratorContext } from "../../context-providers/generator-provider"
+import { useGeneratorContext, type CompanionName } from "../../context-providers/generator-provider"
+import { type PartyMember } from "../../types/bg3-partymember"
 import { getClass } from "./generator-engine"
-import { type PartymemberRollResult } from "../../context-providers/generator-provider"
 
 interface PartySelectorMenuProps {
-    selectedParty: PartyMember[]
-    setSelectedParty: React.Dispatch<React.SetStateAction<PartyMember[]>>
     partyMenuClass: string
     setShowPartyDropdown: React.Dispatch<React.SetStateAction<boolean>>
     hasRolled: boolean
-    partyOptions: PartyMember[]
-    setPartyOptions: React.Dispatch<React.SetStateAction<PartyMember[]>>
+    partyOptions: CompanionName[]
+    setPartyOptions: React.Dispatch<React.SetStateAction<CompanionName[]>>
 }
 
-export type PartyMember = 
-    "Astarion"|
-    "Gale"|
-    "Laezel"|
-    "Shadowheart"|
-    "Wyll"|
-    "Karlach"|
-    "Minthara"|
-    "Halsin"|
-    "Jaheira"|
-    "Minsc"|
-    "Tav"|
-    "Durge"
-    
-export type PartyMemberOrNull = PartyMember | null
+export const PartySelectorMenu = ({ partyMenuClass, setShowPartyDropdown, hasRolled, partyOptions, setPartyOptions }: PartySelectorMenuProps) => {
 
-
-export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuClass, setShowPartyDropdown, hasRolled, partyOptions, setPartyOptions }: PartySelectorMenuProps) => {
-
-    const { partyResult, setPartyResult, tavCounter, setTavCounter } = useGeneratorContext()
+    const { partyResult, setPartyResult, getMemberId } = useGeneratorContext()
     const ref = useRef<HTMLDivElement>(null)
 
 
@@ -43,18 +24,17 @@ export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuCl
     const partyDropdownClass = `w-[100%] p-1 flex flex-col`
     const partyButtonClass = "w-full text-text-primary rounded-xl text-center hover:bg-button-hover hover:text-button-text py-4 mt-3"
     
-    const handleNewPartyMember = (name: PartyMember) => {
-
+    const handleNewPartyMember = (name: CompanionName) => {
 
         if (hasRolled) {
             const result = getClass()
+            const memberId = getMemberId(name)
 
-            const newClass: PartymemberRollResult = {
-                    memberName: name,
+            const newClass: PartyMember = {
+                    characterId: memberId,
+                    displayName: name,
                     classId: result.classId,
-                    className: result.className,
-                    subclassId: result.subclassId,
-                    subclassName: result.subclassName
+                    subclassId: result.subclassId
                 }
             
             const copy = partyResult
@@ -62,17 +42,12 @@ export const PartySelectorMenu = ({ selectedParty, setSelectedParty, partyMenuCl
             if (copy !== null) {
                 const newParty = [...copy, newClass]
                 setPartyResult(newParty)
-            }
-            
+            }        
         }
-        
-        const copy = [...selectedParty, name]
-        setSelectedParty(copy)
-        
         setShowPartyDropdown(false)
 
         if (name !== "Tav") {
-            const copy: PartyMember[] = partyOptions.filter(char => char !== name)
+            const copy: CompanionName[] = partyOptions.filter(char => char !== name)
             setPartyOptions(copy)
         }
     }

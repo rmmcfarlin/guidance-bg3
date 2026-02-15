@@ -1,0 +1,1 @@
+export type Bg3SpellId = string

@@ -1,76 +1,40 @@
-import type { Bg3ClassId, Bg3SubclassId } from "../../types/bg3-classes"
+import type { Bg3ClassId } from "../../types/bg3-classes"
 import { getClass, rerollSubclass, getPartyClasses } from "./generator-engine"
 import { useState, useRef } from 'react'
-import { useGeneratorContext, type PartyRollResult } from "../../context-providers/generator-provider"
-import { type PartyMember, type PartyMemberOrNull } from "./party-selector-menu"
-import { type PartymemberRollResult } from "../../context-providers/generator-provider"
+import { useGeneratorContext, type PartyMemberOrNull, type PartyResult } from "../../context-providers/generator-provider"
+import { type PartyMember } from "../../types/bg3-partymember"
+import { type ClassRollResult } from "../../context-providers/generator-provider"
 import { useClickOutside } from "../../hooks/use-click-outside"
+import { getDisplayName } from "../../global-functions/parse-display-name"
 import "./class-generator.css"
 import D20svg from '../../assets/ui-icons/d20.svg?react'
 import LockedIcon from '../../assets/ui-icons/locked.svg?react'
 import UnlockedSideIcon from '../../assets/ui-icons/unlocked-side.svg?react'
 
-
-interface RollResult {
-    classId: Bg3ClassId
-    className: string
-    subclassId: string
-    subclassName: string
-}
-
 interface ClassSubclassProps {
     hasRolled: boolean
     setHasRolled: React.Dispatch<React.SetStateAction<boolean>>
-    selectedParty: PartyMember[]
-    setSelectedParty: React.Dispatch<React.SetStateAction<PartyMember[]>>
 }
 
-export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty, setSelectedParty }: ClassSubclassProps) => {
+export const ClassSubclassGenerator = ({ hasRolled, setHasRolled }: ClassSubclassProps) => {
     const ref = useRef<HTMLDivElement>(null)
     const [showReroll, setShowReroll] = useState<PartyMemberOrNull>(null)
-    const [result, setResult] = useState<RollResult>({
-        'classId': 'cleric',
-        'className': '',
-        'subclassId': '',
-        'subclassName': ''
-    })
-    const [lockedMembers, setLockedMembers] = useState<PartyMember[]>([])
+    const [lockedMembers, setLockedMembers] = useState<string[]>([])
     const { partyResult, setPartyResult } = useGeneratorContext()
-
-    const { className, subclassId, subclassName } = result
 
     useClickOutside(ref, () => setShowReroll(null))
 
-    const handleRollClass = () => {
-        const result = getClass()
-        setResult(result)
-        setHasRolled(true)
-    }
-
-    const handleRerollSubclass = (cls: Bg3ClassId) => {
-        if (hasRolled) {
-            const result = rerollSubclass(cls)
-            setResult(result)
-        } else {
-            return
-        }
-    }
 
     const handleRollParty = (party: PartyMember[]) => {
 
         const copy = party
         const getUnlockedMembers = (copy: PartyMember[]) => {
-            const filtered: PartyMember[] = []
-            for (let i = 0; i < copy.length; i++) {
-                if (!lockedMembers.includes(copy[i])) {
-                    filtered.push(copy[i])
-                }
-            }
-            return filtered
+            return copy.filter(char => lockedMembers.includes(char.characterId))
         }
 
         const unlockedMembers: PartyMember[]= getUnlockedMembers(copy)
-        const result: PartyRollResult = getPartyClasses(unlockedMembers)
+        const unlockedMemberIds: string[] = unlockedMembers.map(mbr => mbr.characterId)
+        const result: PartyResult = getPartyClasses(unlockedMembers)
 
         if (!hasRolled) {
             setPartyResult(result)
@@ -78,10 +42,10 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
         
         if (partyResult) {
             const combinedResult = partyResult.map(obj => {
-                const name: PartyMember = obj.memberName
-                if (unlockedMembers.includes(name)) {
+                const id: string = obj.characterId
+                if (unlockedMemberIds.includes(id)) {
                     const match = result.find(
-                        r => r.memberName === name
+                        r => r.characterId === id
                     )
                     if (match) {
                         return match
@@ -105,20 +69,21 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
 
     }
 
-    const handleRerollPartymember = (member: PartyMember) => {
+    const handleRerollPartymember = (memberId: string) => {
         const result = getClass()
+        const charObject = partyResult.find(obj => obj.characterId == memberId)!
+        const dspName = charObject?.displayName
 
-        const newClass: PartymemberRollResult = {
-                memberName: member,
+        const newClass: ClassRollResult = {
+                characterId: memberId,
+                displayName: dspName,
                 classId: result.classId,
-                className: result.className,
-                subclassId: result.subclassId,
-                subclassName: result.subclassName
+                subclassId: result.subclassId
             }
 
         if (partyResult) {
             const newParty = partyResult.map(obj => {
-                if (obj.memberName == member) {
+                if (obj.characterId == memberId) {
                     return newClass
                 } else {
                     return obj
@@ -128,20 +93,22 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
         }
     }
 
-    const handleRerollPartymemberSubclass = (member: PartyMember, cls: Bg3ClassId) => {
+    const handleRerollPartymemberSubclass = (memberId: string, cls: Bg3ClassId) => {
 
         const result = rerollSubclass(cls)
-        const newClass: PartymemberRollResult = {
-                memberName: member,
+        const charObject = partyResult.find(obj => obj.characterId == memberId)!
+        const dspName = charObject?.displayName
+
+        const newClass: ClassRollResult = {
+                characterId: memberId,
+                displayName: dspName,
                 classId: result.classId,
-                className: result.className,
                 subclassId: result.subclassId,
-                subclassName: result.subclassName
         }
 
         if (partyResult) {
             const newParty = partyResult.map(obj => {
-                if (obj.memberName == member) {
+                if (obj.characterId == memberId) {
                     return newClass
                 } else {
                     return obj
@@ -175,24 +142,20 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
         }
     }
 
-    const handleLockPartymember = (member: PartyMember) => {
-        const copy = [...lockedMembers, member]
+    const handleLockPartymember = (memberId: string) => {
+        const copy = [...lockedMembers, memberId]
         setLockedMembers(copy)
     }
 
-    const handleUnlockPartymember = (member: PartyMember) => {
-        const copy = lockedMembers
-        const filtered = copy.filter(mbr => mbr !== member)
+    const handleUnlockPartymember = (memberId: string) => {
+        const filtered = lockedMembers.filter(mbr => mbr !== memberId)
 
         setLockedMembers(filtered)
     }
 
-    const getLockIcon = (member: PartyMember) => {
-        return lockedMembers.includes(member)
+    const getLockIcon = (memberId: string) => {
+        return lockedMembers.includes(memberId)
     }
-
-    const iconPath = getIcon(subclassId)
-    const useIcon = new URL(`${iconPath}`, import.meta.url).href
 
     const partymemberOutputClass: string = "flex items-center w-full lg:h-[113px] p-2 border-b-1 border-b-text-primary justify-between lg:justify-evenly"
     const partyRollButtonClass: string = "bg-button-primary text-button-text w-50 mt-5 rounded-xl py-4 text-center text-xl font-bold hover:bg-button-hover"
@@ -207,38 +170,37 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
     return (
     <div className="flex bg-background-generator-primary w-[80%] p-2 lg:pt-10 lg:p-3 lg:px-10 justify-center items-center rounded-xl">
             <div className="flex flex-col items-center w-full" ref={ref}>
-                    {selectedParty.map(member => {
-
-                        if (!partyResult) return null
-
-                        const index = selectedParty.indexOf(member)
-                        const memberData = partyResult[index]
-                        const memberClassId = memberData.classId
-                        const memberClassName = memberData.className
-                        const memberSubclassId = memberData.subclassId
-                        const memberSubclassName = memberData.subclassName
-
+                    {partyResult.map(member => {
+                        if (member.classId && member.subclassId) {
+                        
+                        const memberId = member.characterId
+                        const displayName = member.displayName
+                        const memberClassId = member.classId
+                        const memberClassName = getDisplayName(memberClassId)
+                        const memberSubclassId = member.subclassId
+                        const memberSubclassName = memberSubclassId ? getDisplayName(memberSubclassId) : memberSubclassId
+                        
                         const iconPath = getIcon(memberSubclassId)
                         const useIcon = new URL(`${iconPath}`, import.meta.url).href
 
                         const rerollDropdownClass = handleRerollDropdownClass(member)
-                        const locked = getLockIcon(member)
+                        const locked = getLockIcon(memberId)
 
-                        if (selectedParty.length == 1) {
+                        if (partyResult.length == 1) {
                             return (
-                                <div key={`${member}-${index}-output`} id="class-stats-panel" className="flex flex-col w-full items-center">
+                                <div key={memberId} id="class-stats-panel" className="flex flex-col w-full items-center">
                                     <img src={useIcon} className="w-[200px]"></img>
                                     <div className="flex flex-col items-center">
                                         <span className="text-text-primary font-bold text-4xl">{hasRolled ? memberClassName : ' '}</span>
                                         <span className="text-text-secondary text-3xl mt-2">{hasRolled ? memberSubclassName : ' '}</span>
                                     </div>
-                                    <button onClick={() => handleRerollPartymemberSubclass(member, memberClassId)} className={`${buttonSecondaryClass} w-40 py-3 mt-3 border-[2px] border-button-primary`}>Reroll Subclass</button>
+                                    <button onClick={() => handleRerollPartymemberSubclass(memberId, memberClassId)} className={`${buttonSecondaryClass} w-40 py-3 mt-3 border-[2px] border-button-primary`}>Reroll Subclass</button>
                                 </div>
                             )   
                         }
                         return (
-                            <div key={`${member}-${index}-output`} className={`partymember-class-output-wrapper ${partymemberOutputClass}`}>
-                                <p className="text-text-primary w-[10%] xl:w-[25%] font-bold text-center text-xs lg:text-xl">{member}</p>
+                            <div key={memberId} className={`partymember-class-output-wrapper ${partymemberOutputClass}`}>
+                                <p className="text-text-primary w-[10%] xl:w-[25%] font-bold text-center text-xs lg:text-xl">{displayName}</p>
                                 <div className="flex items-center justify-left w-[50%] lg:w-[50%] xl:w-[300px]">
                                     <img src={useIcon} className={partymemberIconClass}></img>
                                     <div className="ml-1 lg:ml-4">
@@ -250,22 +212,22 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled, selectedParty,
                                     <div className="flex">
                                         <D20svg className={rerollIconClass} onClick={() => handleSetRerollDropdown(member)} />
                                         {locked ? (
-                                            <LockedIcon className={lockedIconClass} onClick={() => handleUnlockPartymember(member)}/>
+                                            <LockedIcon className={lockedIconClass} onClick={() => handleUnlockPartymember(memberId)}/>
                                         ) : (
-                                            <UnlockedSideIcon className={unlockedIconClass} onClick={() => handleLockPartymember(member)}/>
+                                            <UnlockedSideIcon className={unlockedIconClass} onClick={() => handleLockPartymember(memberId)}/>
                                         )
                                         }                                
                                     </div>
                                     <div className={rerollDropdownClass}>
                                         <p className="text-text-primary text-bold">Reroll</p>
-                                        <button onClick={() => handleRerollPartymember(member)} className={`${buttonPrimaryClass} w-10 xl:w-25 text-xs mb-2 font-normal`}>Class</button>
-                                        <button onClick={() => handleRerollPartymemberSubclass(member, memberClassId)} className={`${buttonSecondaryClass} w-10 xl:w-25 text-xs`}>Subclass</button>
+                                        <button onClick={() => handleRerollPartymember(memberId)} className={`${buttonPrimaryClass} w-10 xl:w-25 text-xs mb-2 font-normal`}>Class</button>
+                                        <button onClick={() => handleRerollPartymemberSubclass(memberId, memberClassId)} className={`${buttonSecondaryClass} w-10 xl:w-25 text-xs`}>Subclass</button>
                                     </div>
                                 </div>
                             </div>
                         )
-                    })}
-                    <button className={partyRollButtonClass} onClick={() => handleRollParty(selectedParty)}>{hasRolled ? 'Reroll' : 'Roll'}</button>
+                    }})}
+                    <button className={partyRollButtonClass} onClick={() => handleRollParty(partyResult)}>{hasRolled ? 'Reroll' : 'Roll'}</button>
                 </div>
         </div>
     )

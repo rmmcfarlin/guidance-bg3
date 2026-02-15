@@ -1,49 +1,49 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import PlusCurved from '../../assets/ui-icons/plus-curved.svg?react'
 import { PartySelectorMenu } from './party-selector-menu'
-import { type PartyMember, type PartyMemberOrNull } from './party-selector-menu'
+import { type PartyMember } from '../../types/bg3-partymember'
+import { type CompanionName, companionNames } from '../../context-providers/generator-provider'
 import { useClickOutside } from '../../hooks/use-click-outside'
-import { useGeneratorContext, type PartyResult, type PartyRollResultOrNull } from '../../context-providers/generator-provider'
-import Astarion from '../../assets/character-portraits/portrait-Astarion.png'
-import Wyll from '../../assets/character-portraits/portrait-Wyll.png'
-import Karlach from '../../assets/character-portraits/portrait-Karlach.png'
-import Shadowheart from '../../assets/character-portraits/portrait-Shadowheart.png'
-import Halsin from '../../assets/character-portraits/portrait-Halsin.png'
-import Minsc from '../../assets/character-portraits/portrait-Minsc.png'
-import Tav from '../../assets/character-portraits/portrait-Tav.png'
-import Minthara from '../../assets/character-portraits/portrait-Minthara.png'
-import Jaheira from '../../assets/character-portraits/portrait-Jaheira.png'
-import Laezel from "../../assets/character-portraits/portrait-Laezel.png"
-import Gale from '../../assets/character-portraits/portrait-Gale.png'
-import Durge from '../../assets/character-portraits/portrait-Durge.png'
+import { useGeneratorContext } from '../../context-providers/generator-provider'
+
+import astarion from '../../assets/character-portraits/portrait-Astarion.png'
+import wyll from '../../assets/character-portraits/portrait-Wyll.png'
+import karlach from '../../assets/character-portraits/portrait-Karlach.png'
+import shadowheart from '../../assets/character-portraits/portrait-Shadowheart.png'
+import halsin from '../../assets/character-portraits/portrait-Halsin.png'
+import minsc from '../../assets/character-portraits/portrait-Minsc.png'
+import tav from '../../assets/character-portraits/portrait-Tav.png'
+import minthara from '../../assets/character-portraits/portrait-Minthara.png'
+import jaheira from '../../assets/character-portraits/portrait-Jaheira.png'
+import laezel from "../../assets/character-portraits/portrait-Laezel.png"
+import gale from '../../assets/character-portraits/portrait-Gale.png'
+import durge from '../../assets/character-portraits/portrait-Durge.png'
 
 
-const portraitMap: Record<PartyMember, string> = {
-    Astarion,
-    Wyll,
-    Karlach,
-    Shadowheart,
-    Halsin,
-    Minsc,
-    Tav,
-    Minthara,
-    Jaheira,
-    Laezel,
-    Gale,
-    Durge
+const portraitMap: Record<string, string> = {
+    astarion,
+    wyll,
+    karlach,
+    shadowheart,
+    halsin,
+    minsc,
+    minthara,
+    jaheira,
+    laezel,
+    gale,
+    durge,
+    tav
 }
 
 interface PartySelectorSidebarProps {
-    selectedParty: PartyMember[]
-    setSelectedParty: React.Dispatch<React.SetStateAction<PartyMember[]>>
     hasRolled: boolean
 }
 
-export const PartySelectorSidebar = ({ selectedParty, setSelectedParty, hasRolled }: PartySelectorSidebarProps) => {
+export const PartySelectorSidebar = ({ hasRolled }: PartySelectorSidebarProps) => {
     const ref = useRef<HTMLDivElement>(null)
     const [showPartyDropdown, setShowPartyDropdown] = useState<boolean>(false)
-    const [clickedPartymember, setClickedPartymember] = useState<PartyMemberOrNull>(null)
-    const [partyOptions, setPartyOptions] = useState<PartyMember[]>([
+    const [clickedPartymember, setClickedPartymember] = useState<string>('')
+    const [partyOptions, setPartyOptions] = useState<CompanionName[]>([
             "Tav", 
             "Durge", 
             "Astarion", 
@@ -69,44 +69,49 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty, hasRolle
     const handleShowPartyMenu = () => {
         setShowPartyDropdown(!showPartyDropdown)
     }
-    const getRemoveButtonClass = (member: PartyMember) => {
-        if (member == clickedPartymember) {
+    const getRemoveButtonClass = (memberId: string) => {
+        if (memberId == clickedPartymember) {
             return removePartymemberButtonClass
         } else {
             return 'hidden'
         }
     }
 
-    const handleRemoveMember = (member: PartyMember) => {
-        const copy: PartyMember[] = [...selectedParty]
-        const filtered: PartyMember[] = copy.filter(char => char !== member)
-        setSelectedParty(filtered)
+    const handleRemoveMember = (memberId: string) => {
+        const copy: PartyMember[] = [...partyResult]
+        const filtered: PartyMember[] = copy.filter(char => char.characterId !== memberId)
+        setPartyResult(filtered)
 
-        if (partyResult) {
-            const resCopy: PartyRollResultOrNull = partyResult
-            const resFiltered: PartyRollResultOrNull = resCopy.filter(char => char.memberName !== member)
-            setPartyResult(resFiltered)
-        }
+        const index = partyResult.findIndex(mbr => mbr.characterId === memberId)
+        const displayName = partyResult[index].displayName
+        const name = companionNames.includes(displayName) ? (displayName as CompanionName) : null
 
-        let optionsCopy = partyOptions
-        optionsCopy = [...optionsCopy, member]
-        setPartyOptions(optionsCopy)
-
+        if (name) {
+            let optionsCopy = partyOptions
+            optionsCopy = [...optionsCopy, name]
+            setPartyOptions(optionsCopy)
+        }      
     }
 
-    useClickOutside(ref, () => setClickedPartymember(null))
+    useClickOutside(ref, () => setClickedPartymember(''))
 
     let i = 0
 
+    if (partyResult) {
+
     return(
         <div ref={ref} id="party-selector-sidebar" className="flex flex-col w-[8%] ml-5 lg:ml-0 lg:pt-10 lg:absolute lg:left-10 items-center">
-            {selectedParty.map(member => {
-                const index = selectedParty.indexOf(member)
+            {partyResult.map(member => {
                 i = i += 1
+
+                const memberId = member.characterId
+                const memberName = member.displayName
+                const portraitId = memberId.split('-')[0] == 'tav' ? 'tav' : memberId
+
                 return (
                     <div className={portraitWrapper} key={`${member}-${i}`}>
-                        <img src={portraitMap[member]} className={characterPortraitIcon} onClick={() => setClickedPartymember(member)}></img>
-                        <button id={`${member} delete button`} className={getRemoveButtonClass(member)} onClick={() => handleRemoveMember(member)}>X</button>
+                        <img src={portraitMap[portraitId]} className={characterPortraitIcon} onClick={() => setClickedPartymember(memberId)}></img>
+                        <button id={`${member} delete button`} className={getRemoveButtonClass(memberName)} onClick={() => handleRemoveMember(memberId)}>X</button>
                     </div>
                 )
             })}
@@ -114,8 +119,6 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty, hasRolle
                 <PlusCurved className="size-[25px] fill-text-primary" />
             </div>
             <PartySelectorMenu 
-                selectedParty={selectedParty}
-                setSelectedParty={setSelectedParty}
                 partyMenuClass={partyMenuClass}
                 setShowPartyDropdown={setShowPartyDropdown}
                 hasRolled={hasRolled}
@@ -124,4 +127,5 @@ export const PartySelectorSidebar = ({ selectedParty, setSelectedParty, hasRolle
                 />
         </div>
     )
+}
 }

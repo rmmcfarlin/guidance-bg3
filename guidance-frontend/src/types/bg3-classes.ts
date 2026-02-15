@@ -1,5 +1,9 @@
-export const BG3_Classes = {
-  "classes": {
+interface Class {
+  name: string
+  subclasses: Record<string, {name: string}>
+}
+
+export const BG3_Classes: Record<string, Class> = {
     "barbarian": {
       "name": "Barbarian",
       "subclasses": {
@@ -117,8 +121,11 @@ export const BG3_Classes = {
         "transmutation": { "name": "School of Transmutation" }
       }
     }
-  }
-} as const
+  } as const
 
 export type Bg3ClassId = keyof typeof BG3_Classes.classes
-export type Bg3SubclassId <C extends Bg3ClassId> = keyof typeof BG3_Classes.classes[C]["subclasses"]
+export type Bg3SubclassId <C extends Bg3ClassId> = keyof typeof BG3_Classes[C]["subclasses"]
+
+export type AllSubclassIds = {
+  [S in Bg3ClassId]: keyof typeof BG3_Classes[S]["subclasses"]
+}[Bg3ClassId]

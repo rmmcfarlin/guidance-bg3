@@ -16,7 +16,7 @@ export const ClassGeneratorMain = ({}) => {
         "Build"
     ]
 
-    const { hasRolled, setHasRolled, selectedParty, setSelectedParty, partyResult, setPartyResult } = useGeneratorContext()
+    const { hasRolled, setHasRolled } = useGeneratorContext()
 
     const tabContainerClass: string = "flex w-[100%] lg:w-[70%] mb-10 justify-center border-b-[1px] border-b-text-primary pb-3 ml-auto mr-auto"
     const tabButtonClass: string = "text-text-primary text-s lg:text-[1rem] p-2 rounded-xl mt-2 w-[24%] lg:w-[20%] drop-shadow-md"
@@ -34,11 +34,9 @@ export const ClassGeneratorMain = ({}) => {
     const renderContent = () => {
         if (selectedTab == "Class") {
             return <ClassSubclassGenerator
-                    selectedParty={selectedParty}
-                    setSelectedParty={setSelectedParty}
-                    hasRolled={hasRolled}
-                    setHasRolled={setHasRolled} 
-                 />
+                        hasRolled={hasRolled}
+                        setHasRolled={setHasRolled} 
+                    />
         } else if (selectedTab == "Character") {
             return <CharacterGenerator 
                         />
@@ -58,8 +56,6 @@ export const ClassGeneratorMain = ({}) => {
                 </div>
                 <div className="flex">
                     <PartySelectorSidebar
-                        selectedParty={selectedParty}
-                        setSelectedParty={setSelectedParty}
                         hasRolled={hasRolled}
                     />
                     <div id="generator-content-main" className="flex justify-center h-full w-[90vw] lg:w-full rounded-xl drop-shadow-xl my-auto">
