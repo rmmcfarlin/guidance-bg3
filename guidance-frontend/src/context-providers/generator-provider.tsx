@@ -8,8 +8,6 @@ import { type PartyMember } from "../types/bg3-partymember";
 export interface GeneratorContext {
     hasRolled: boolean
     setHasRolled: React.Dispatch<React.SetStateAction<boolean>>
-    // selectedParty: PartyMember[]
-    // setSelectedParty: React.Dispatch<React.SetStateAction<PartyMember[]>>
     partyResult: PartyMember[]
     setPartyResult: React.Dispatch<React.SetStateAction<PartyMember[]>>
     tavCounter: number
@@ -72,9 +70,6 @@ const GeneratorContext = createContext<GeneratorContext | undefined>(undefined)
 export const GeneratorProvider = ({ children }: {children: ReactNode}) => {
 
     const [hasRolled, setHasRolled] = useState<boolean>(false)
-    // const [selectedParty, setSelectedParty] = useState<PartyMember[]>([
-    //     {characterId: "tav-1", displayName: "Tav"}
-    // ])
     const [partyResult, setPartyResult] = useState<PartyResult>([
         {characterId: "tav-1", displayName: "Tav"}
     ])
@@ -84,7 +79,7 @@ export const GeneratorProvider = ({ children }: {children: ReactNode}) => {
     if (name !== "Tav") {
         return name.toLowerCase()
     } else {
-        let counter = tavCounter
+        let counter = tavCounter + 1
         setTavCounter(prev => prev + 1)
         return `tav-${counter}`
     }
@@ -94,8 +89,6 @@ export const GeneratorProvider = ({ children }: {children: ReactNode}) => {
     const value = {
         hasRolled,
         setHasRolled,
-        // selectedParty,
-        // setSelectedParty,
         partyResult,
         setPartyResult,
         tavCounter,

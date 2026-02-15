@@ -16,6 +16,7 @@ export const ClassGeneratorMain = ({}) => {
         "Build"
     ]
 
+    
     const { hasRolled, setHasRolled } = useGeneratorContext()
 
     const tabContainerClass: string = "flex w-[100%] lg:w-[70%] mb-10 justify-center border-b-[1px] border-b-text-primary pb-3 ml-auto mr-auto"

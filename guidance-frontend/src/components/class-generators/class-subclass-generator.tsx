@@ -20,19 +20,22 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled }: ClassSubclas
     const ref = useRef<HTMLDivElement>(null)
     const [showReroll, setShowReroll] = useState<PartyMemberOrNull>(null)
     const [lockedMembers, setLockedMembers] = useState<string[]>([])
-    const { partyResult, setPartyResult } = useGeneratorContext()
+    const { partyResult, setPartyResult, tavCounter} = useGeneratorContext()
 
     useClickOutside(ref, () => setShowReroll(null))
 
 
-    const handleRollParty = (party: PartyMember[]) => {
+    console.log(tavCounter)
 
+    const handleRollParty = (party: PartyMember[]) => {
         const copy = party
+        
         const getUnlockedMembers = (copy: PartyMember[]) => {
-            return copy.filter(char => lockedMembers.includes(char.characterId))
+            return copy.filter(char => !lockedMembers.includes(char.characterId))
         }
 
         const unlockedMembers: PartyMember[]= getUnlockedMembers(copy)
+
         const unlockedMemberIds: string[] = unlockedMembers.map(mbr => mbr.characterId)
         const result: PartyResult = getPartyClasses(unlockedMembers)
 
@@ -58,8 +61,6 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled }: ClassSubclas
             })
 
             if (combinedResult ) {
-                
-                console.log(combinedResult)
                 setPartyResult(combinedResult)
             } else {
                 console.log("Error: combined locked / unlocked result is undefined")

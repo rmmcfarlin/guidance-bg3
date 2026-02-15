@@ -58,7 +58,7 @@ export const PartySelectorSidebar = ({ hasRolled }: PartySelectorSidebarProps) =
             "Minsc"
         ])
 
-    const { partyResult, setPartyResult } = useGeneratorContext()
+    const { partyResult, setPartyResult, tavCounter, setTavCounter } = useGeneratorContext()
     
 
     const portraitWrapper: string = "w-[50px] lg:w-[75px] p-0.5 bg-background-portrait flex flex-col items-center mb-5"
@@ -78,6 +78,9 @@ export const PartySelectorSidebar = ({ hasRolled }: PartySelectorSidebarProps) =
     }
 
     const handleRemoveMember = (memberId: string) => {
+        console.log(tavCounter)
+        const isTav = memberId.split('-').slice(0, 1).toString() == "tav"
+
         const copy: PartyMember[] = [...partyResult]
         const filtered: PartyMember[] = copy.filter(char => char.characterId !== memberId)
         setPartyResult(filtered)
@@ -90,7 +93,17 @@ export const PartySelectorSidebar = ({ hasRolled }: PartySelectorSidebarProps) =
             let optionsCopy = partyOptions
             optionsCopy = [...optionsCopy, name]
             setPartyOptions(optionsCopy)
-        }      
+        } 
+
+        if (isTav) setTavCounter(prev => prev -1)
+
+        if (isTav && tavCounter >= 4) {
+            const name = "Tav"
+            let optionsCopy = partyOptions
+            optionsCopy = [name, ...optionsCopy]
+            setPartyOptions(optionsCopy)
+        }
+
     }
 
     useClickOutside(ref, () => setClickedPartymember(''))
@@ -105,13 +118,12 @@ export const PartySelectorSidebar = ({ hasRolled }: PartySelectorSidebarProps) =
                 i = i += 1
 
                 const memberId = member.characterId
-                const memberName = member.displayName
                 const portraitId = memberId.split('-')[0] == 'tav' ? 'tav' : memberId
 
                 return (
                     <div className={portraitWrapper} key={`${member}-${i}`}>
                         <img src={portraitMap[portraitId]} className={characterPortraitIcon} onClick={() => setClickedPartymember(memberId)}></img>
-                        <button id={`${member} delete button`} className={getRemoveButtonClass(memberName)} onClick={() => handleRemoveMember(memberId)}>X</button>
+                        <button id={`${member} delete button`} className={getRemoveButtonClass(memberId)} onClick={() => handleRemoveMember(memberId)}>X</button>
                     </div>
                 )
             })}
