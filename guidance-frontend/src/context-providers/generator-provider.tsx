@@ -13,6 +13,8 @@ export interface GeneratorContext {
     tavCounter: number
     setTavCounter: React.Dispatch<React.SetStateAction<number>>
     getMemberId: (name: CompanionName) => string
+    tavIdArr: string[]
+    setTavIdArr: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 export type CompanionName = 
@@ -74,14 +76,21 @@ export const GeneratorProvider = ({ children }: {children: ReactNode}) => {
         {characterId: "tav-1", displayName: "Tav"}
     ])
     const [tavCounter, setTavCounter] = useState<number>(1)
+    const [tavIdArr, setTavIdArr] = useState<string[]>([
+        "tav-4",
+        "tav-3",
+        "tav-2"
+    ])
 
     const getMemberId = (name: CompanionName | string) => {
     if (name !== "Tav") {
         return name.toLowerCase()
     } else {
-        let counter = tavCounter + 1
+        let id = tavIdArr.pop()
         setTavCounter(prev => prev + 1)
-        return `tav-${counter}`
+
+        if (id) return id
+        return `tav`
     }
     
 }
@@ -93,7 +102,9 @@ export const GeneratorProvider = ({ children }: {children: ReactNode}) => {
         setPartyResult,
         tavCounter,
         setTavCounter,
-        getMemberId
+        getMemberId,
+        tavIdArr,
+        setTavIdArr
     }
 
     return(

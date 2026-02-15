@@ -58,7 +58,7 @@ export const PartySelectorSidebar = ({ hasRolled }: PartySelectorSidebarProps) =
             "Minsc"
         ])
 
-    const { partyResult, setPartyResult, tavCounter, setTavCounter } = useGeneratorContext()
+    const { partyResult, setPartyResult, tavCounter, setTavCounter, tavIdArr, setTavIdArr } = useGeneratorContext()
     
 
     const portraitWrapper: string = "w-[50px] lg:w-[75px] p-0.5 bg-background-portrait flex flex-col items-center mb-5"
@@ -95,7 +95,11 @@ export const PartySelectorSidebar = ({ hasRolled }: PartySelectorSidebarProps) =
             setPartyOptions(optionsCopy)
         } 
 
-        if (isTav) setTavCounter(prev => prev -1)
+        if (isTav) {
+            setTavCounter(prev => prev -1)
+            const copy = [...tavIdArr, memberId]
+            setTavIdArr(copy)
+        }
 
         if (isTav && tavCounter >= 4) {
             const name = "Tav"

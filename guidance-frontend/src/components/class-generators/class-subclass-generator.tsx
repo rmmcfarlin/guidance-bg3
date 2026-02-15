@@ -20,12 +20,9 @@ export const ClassSubclassGenerator = ({ hasRolled, setHasRolled }: ClassSubclas
     const ref = useRef<HTMLDivElement>(null)
     const [showReroll, setShowReroll] = useState<PartyMemberOrNull>(null)
     const [lockedMembers, setLockedMembers] = useState<string[]>([])
-    const { partyResult, setPartyResult, tavCounter} = useGeneratorContext()
+    const { partyResult, setPartyResult } = useGeneratorContext()
 
     useClickOutside(ref, () => setShowReroll(null))
-
-
-    console.log(tavCounter)
 
     const handleRollParty = (party: PartyMember[]) => {
         const copy = party
