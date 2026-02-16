@@ -15,6 +15,9 @@ export interface GeneratorContext {
     getMemberId: (name: CompanionName) => string
     tavIdArr: string[]
     setTavIdArr: React.Dispatch<React.SetStateAction<string[]>>
+    lockedMembers: string[]
+    setLockedMembers: React.Dispatch<React.SetStateAction<string[]>>
+    getUnlockedMembers: (party: PartyMember[]) => PartyMember[]
 }
 
 export type CompanionName = 
@@ -75,6 +78,7 @@ export const GeneratorProvider = ({ children }: {children: ReactNode}) => {
     const [partyResult, setPartyResult] = useState<PartyResult>([
         {characterId: "tav-1", displayName: "Tav"}
     ])
+    const [lockedMembers, setLockedMembers] = useState<string[]>([])
     const [tavCounter, setTavCounter] = useState<number>(1)
     const [tavIdArr, setTavIdArr] = useState<string[]>([
         "tav-4",
@@ -83,17 +87,21 @@ export const GeneratorProvider = ({ children }: {children: ReactNode}) => {
     ])
 
     const getMemberId = (name: CompanionName | string) => {
-    if (name !== "Tav") {
-        return name.toLowerCase()
-    } else {
-        let id = tavIdArr.pop()
-        setTavCounter(prev => prev + 1)
+        if (name !== "Tav") {
+            return name.toLowerCase()
+        } else {
+            let id = tavIdArr.pop()
+            setTavCounter(prev => prev + 1)
 
-        if (id) return id
-        return `tav`
+            if (id) return id
+            return `tav`
+        }
+
     }
     
-}
+    const getUnlockedMembers = (copy: PartyMember[]): PartyMember[] => {
+        return copy.filter(char => !lockedMembers.includes(char.characterId))
+    }
 
     const value = {
         hasRolled,
@@ -104,7 +112,10 @@ export const GeneratorProvider = ({ children }: {children: ReactNode}) => {
         setTavCounter,
         getMemberId,
         tavIdArr,
-        setTavIdArr
+        setTavIdArr, 
+        lockedMembers, 
+        setLockedMembers,
+        getUnlockedMembers
     }
 
     return(

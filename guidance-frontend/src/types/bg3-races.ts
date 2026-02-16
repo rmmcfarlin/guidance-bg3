@@ -1,4 +1,3 @@
-import { type CompanionName } from "../context-providers/generator-provider"
 import type { Bg3BackgroundId } from "./bg3-backgrounds"
 
 interface Race {
@@ -21,40 +20,40 @@ export const Bg3_Races: Record<string, Race>= {
      "half-elf": {
         "name": "Half Elf",
         "subraces": {
-            "high-half": { "name": "High Half-Elf"},
-            "wood-half": { "name": "Wood Half-Elf"},
-            "drow-half": { "name": "Drow Half-Elf"}
+            "high-half-elf": { "name": "High Half-Elf"},
+            "wood-half-elf": { "name": "Wood Half-Elf"},
+            "drow-half-elf": { "name": "Drow Half-Elf"}
         }
     },
     "drow": {
         "name": "Drow",
         "subraces": {
-            "lolth-sworn": { "name": "Lolth-Sworn Drow"},
-            "seldarine": { "name": "Seldarine Drow"}
+            "lolth-sworn-drow": { "name": "Lolth-Sworn Drow"},
+            "seldarine-drow": { "name": "Seldarine Drow"}
         }
     },
     "dwarf": {
         "name": "Dwarf",
         "subraces": {
-            "gold": { "name": "Gold Dwarf"},
-            "shield": { "name": "Shield Dwarf"},
+            "gold-dwarf": { "name": "Gold Dwarf"},
+            "shield-dwarf": { "name": "Shield Dwarf"},
             "duergar": { "name": "Duergar"}
         }
     },
     "gnome": {
         "name": "Gnome",
         "subraces": {
-            "rock": { "name": "Rock Gnome"},
-            "forest": { "name": "Forest Gnome"},
-            "deep": { "name": "Deep Gnome"}
+            "rock-gnome": { "name": "Rock Gnome"},
+            "forest-gnome": { "name": "Forest Gnome"},
+            "deep-gnome": { "name": "Deep Gnome"}
         }
     },
     "tiefling": {
         "name": "Tiefling",
         "subraces": {
-            "asmodeus": { "name": "Asmodeus Tiefling"},
-            "mephistopheles": { "name": "Mephistopheles Tiefling"},
-            "zariel": { "name": "Zariel Tiefling"},
+            "asmodeus-tiefling": { "name": "Asmodeus Tiefling"},
+            "mephistopheles-tiefling": { "name": "Mephistopheles Tiefling"},
+            "zariel-tiefling": { "name": "Zariel Tiefling"},
         }
     },
     "githyanki": {
@@ -64,16 +63,16 @@ export const Bg3_Races: Record<string, Race>= {
     "dragonborn": {
         "name": "Dragonborn",
         "subraces": {
-            "black": { "name": "Black Dragonborn"},
-            "blue": { "name": "Blue Dragonborn"},
-            "brass": { "name": "Brass Dragonborn"},
-            "bronze": { "name": "Bronze Dragonborn"},
-            "copper": { "name": "Copper Dragonborn"},
-            "gold": { "name": "Gold Dragonborn"},
-            "green": { "name": "Green Dragonborn"},
-            "red": { "name": "Red Dragonborn"},
-            "silver": { "name": "Silver Dragonborn"},
-            "white": { "name": "White Dragonborn"}
+            "black-dragonborn": { "name": "Black Dragonborn"},
+            "blue-dragonborn": { "name": "Blue Dragonborn"},
+            "brass-dragonborn": { "name": "Brass Dragonborn"},
+            "bronze-dragonborn": { "name": "Bronze Dragonborn"},
+            "copper-dragonborn": { "name": "Copper Dragonborn"},
+            "gold-dragonborn": { "name": "Gold Dragonborn"},
+            "green-dragonborn": { "name": "Green Dragonborn"},
+            "red-dragonborn": { "name": "Red Dragonborn"},
+            "silver-dragonborn": { "name": "Silver Dragonborn"},
+            "white-dragonborn": { "name": "White Dragonborn"}
         }
     },
     "half-orc": {
@@ -83,8 +82,8 @@ export const Bg3_Races: Record<string, Race>= {
     "halfling": {
         "name": "Halfling",
         "subraces": {
-            "strongheart": { "name": "Strongheart Halfling"},
-            "lightfoot": { "name": "Lightfoot Halfling"}
+            "strongheart-halfling": { "name": "Strongheart Halfling"},
+            "lightfoot-halfling": { "name": "Lightfoot Halfling"}
         }
     }
 } as const
@@ -127,13 +126,13 @@ export const companionBackgrounds: Record<string, CompanionBackground> = {
         "backgroundName": "Soldier"
     },
     "karlach": {
-        "raceId": "zariel",
+        "raceId": "zariel-tiefling",
         "raceName": "Zariel Tiefling",
         "backgroundId": "outlander",
         "backgroundName": "Outlander"
     },
     "shadowheart": {
-        "raceId": "half-high",
+        "raceId": "high-half-elf",
         "raceName": "High Half-Elf",
         "backgroundId": "acolyte",
         "backgroundName": "Acolyte"
@@ -145,13 +144,13 @@ export const companionBackgrounds: Record<string, CompanionBackground> = {
         "backgroundName": "Folk Hero"
     },
     "minthara": {
-        "raceId": "lolth",
+        "raceId": "lolth-sworn-drow",
         "raceName": "Lolth Sworn Drow",
         "backgroundId": "noble",
         "backgroundName": "Noble"
     },
     "jaheira": {
-        "raceId": "high-half",
+        "raceId": "half-high-elf",
         "raceName": "High Half-Elf",
         "backgroundId": "soldier",
         "backgroundName": "Soldier"
@@ -169,7 +168,7 @@ export const companionBackgrounds: Record<string, CompanionBackground> = {
         "backgroundName": "Outlander"
     }, 
     "durge": {
-        "raceId": "white",
+        "raceId": "white-dragonborn",
         "raceName": "White Dragonborn",
         "backgroundId": "haunted-one",
         "backgroundName": "Haunted One"

@@ -3,6 +3,7 @@ export function getDisplayName(str: string): string {
 
     return str
         .split("-")
+        .filter(w => w !== "uniquifier")
         .map(word =>
             conjunctions.has(word) ? word : word[0].toUpperCase() + word.slice(1)
         )

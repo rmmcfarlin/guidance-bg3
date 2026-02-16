@@ -10,16 +10,16 @@ export const BG3_Classes: Record<string, Class> = {
         "berserker": { "name": "Berserker" },
         "giant": { "name": "Giant" },
         "wild-heart": { "name": "Wild Heart" },
-        "wild-magic-barbarian": { "name": "Wild Magic" }
+        "wild-magic-uniquifier": { "name": "Wild Magic" }
       }
     },
     "bard": {
       "name": "Bard",
       "subclasses": {
-        "lore": { "name": "College of Lore" },
-        "glamour": { "name": "College of Glamour" },
-        "swords": { "name": "College of Swords" },
-        "valor": { "name": "College of Valor" }
+        "college-of-lore": { "name": "College of Lore" },
+        "college-of-glamour": { "name": "College of Glamour" },
+        "college-of-swords": { "name": "College of Swords" },
+        "college-of-valor": { "name": "College of Valor" }
       }
     },
     "cleric": {
@@ -38,10 +38,10 @@ export const BG3_Classes: Record<string, Class> = {
     "druid": {
       "name": "Druid",
       "subclasses": {
-        "land": { "name": "Circle of the Land" },
-        "moon": { "name": "Circle of the Moon" },
-        "spores": { "name": "Circle of Spores" },
-        "stars": { "name": "Circle of Stars"}
+        "circle-of-the-land": { "name": "Circle of the Land" },
+        "circle-of-the-moon": { "name": "Circle of the Moon" },
+        "circle-of-spores": { "name": "Circle of Spores" },
+        "circle-of-stars": { "name": "Circle of Stars"}
       }
     },
     "fighter": {
@@ -56,19 +56,20 @@ export const BG3_Classes: Record<string, Class> = {
     "monk": {
       "name": "Monk",
       "subclasses": {
-        "drunk": { "name": "Way of the Drunken Master"},
-        "four-elements": { "name": "Way of the Four Elements" },
-        "open-hand": { "name": "Way of the Open Hand" },
-        "shadow": { "name": "Way of Shadow" }
+        "way-of-the-drunken-master": { "name": "Way of the Drunken Master"},
+        "way-of-the-four-elements": { "name": "Way of the Four Elements" },
+        "way-of-the-open-hand": { "name": "Way of the Open Hand" },
+        "way-of-the-shadow": { "name": "Way of Shadow" }
       }
     },
     "paladin": {
       "name": "Paladin",
       "subclasses": {
-        "ancients": { "name": "Oath of the Ancients" },
-        "crown": { "name": "Oath of the Crown" },
-        "devotion": { "name": "Oath of Devotion" },
-        "vengeance": { "name": "Oath of Vengeance" }
+        "oath-of-the-ancients": { "name": "Oath of the Ancients" },
+        "oath-of-the-crown": { "name": "Oath of the Crown" },
+        "oath-of-devotion": { "name": "Oath of Devotion" },
+        "oath-of-vengeance": { "name": "Oath of Vengeance" },
+        "oathbreaker": { "name": "Oathbreaker"}
       }
     },
     "ranger": {
@@ -95,30 +96,30 @@ export const BG3_Classes: Record<string, Class> = {
         "draconic-bloodline": { "name": "Draconic Bloodline" },
         "shadow-magic": { "name": "Shadow Magic"},
         "storm-sorcery": { "name": "Storm Sorcery" },
-        "wild-magic-sorcerer": { "name": "Wild Magic" }
+        "wild-magic": { "name": "Wild Magic" }
       }
     },
     "warlock": {
       "name": "Warlock",
       "subclasses": {
-        "archfey": { "name": "The Archfey" },
-        "fiend": { "name": "The Fiend" },
-        "hexblade": { "name": "The Hexblade" },
-        "great-old-one": { "name": "The Great Old One" }
+        "the-archfey": { "name": "The Archfey" },
+        "the-fiend": { "name": "The Fiend" },
+        "the-hexblade": { "name": "The Hexblade" },
+        "the-great-old-one": { "name": "The Great Old One" }
       }
     },
     "wizard": {
       "name": "Wizard",
       "subclasses": {
-        "abjuration": { "name": "School of Abjuration" },
-        "bladesinging": { "name": "School of Bladesinging" },
-        "conjuration": { "name": "School of Conjuration" },
-        "divination": { "name": "School of Divination" },
-        "enchantment": { "name": "School of Enchantment" },
-        "evocation": { "name": "School of Evocation" },
-        "illusion": { "name": "School of Illusion" },
-        "necromancy": { "name": "School of Necromancy" },
-        "transmutation": { "name": "School of Transmutation" }
+        "school-of-abjuration": { "name": "School of Abjuration" },
+        "school-of-bladesinging": { "name": "School of Bladesinging" },
+        "school-of-conjuration": { "name": "School of Conjuration" },
+        "school-of-divination": { "name": "School of Divination" },
+        "school-of-enchantment": { "name": "School of Enchantment" },
+        "school-of-evocation": { "name": "School of Evocation" },
+        "school-of-illusion": { "name": "School of Illusion" },
+        "school-of-necromancy": { "name": "School of Necromancy" },
+        "school-of-transmutation": { "name": "School of Transmutation" }
       }
     }
   } as const

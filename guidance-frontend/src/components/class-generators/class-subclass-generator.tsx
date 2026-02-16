@@ -19,17 +19,13 @@ interface ClassSubclassProps {
 export const ClassSubclassGenerator = ({ hasRolled, setHasRolled }: ClassSubclassProps) => {
     const ref = useRef<HTMLDivElement>(null)
     const [showReroll, setShowReroll] = useState<PartyMemberOrNull>(null)
-    const [lockedMembers, setLockedMembers] = useState<string[]>([])
-    const { partyResult, setPartyResult } = useGeneratorContext()
+    const { partyResult, setPartyResult, lockedMembers, setLockedMembers, getUnlockedMembers } = useGeneratorContext()
 
     useClickOutside(ref, () => setShowReroll(null))
 
     const handleRollParty = (party: PartyMember[]) => {
         const copy = party
         
-        const getUnlockedMembers = (copy: PartyMember[]) => {
-            return copy.filter(char => !lockedMembers.includes(char.characterId))
-        }
 
         const unlockedMembers: PartyMember[]= getUnlockedMembers(copy)
 

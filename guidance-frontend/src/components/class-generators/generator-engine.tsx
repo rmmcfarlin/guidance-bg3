@@ -3,6 +3,7 @@ import { type PartyMember } from '../../types/bg3-partymember'
 import { Bg3_Races, type Bg3RaceId, companionBackgrounds } from "../../types/bg3-races"
 import { Bg3_Backgrounds, type Bg3BackgroundId } from "../../types/bg3-backgrounds"
 import { companionNames } from '../../context-providers/generator-provider'
+import { getDisplayName } from '../../global-functions/parse-display-name'
 
 function randItem<T>(arr: readonly T[]): T {
     return arr[Math.floor(Math.random() * arr.length)]
@@ -54,9 +55,7 @@ export function getPartyClasses (party: PartyMember[]) {
         characterId: party[i].characterId,
         displayName: party[i].displayName,
         classId: rolledClass,
-        className: BG3_Classes[rolledClass].name,
-        subclassId: rolledSubclass,
-        subclassName: subclasses[rolledSubclass].name 
+        subclassId: rolledSubclass
     }
 
     result.push(memberResult)
@@ -71,24 +70,26 @@ export function getCharacters (party: PartyMember[])  {
   const partyIds = party.map(mbr => mbr.characterId)
   const includesDurge = partyIds.includes("durge")
 
+  party = getPartyClasses(party)
+
   for (let i = 0; i < party.length; i++) {
 
+    let id = party[i].characterId
+    
     if (!companionNames.includes(party[i].displayName)) {
       let rolledRace = randItem(raceArr)
-      let raceName = Bg3_Races[rolledRace].name
       let raceId = rolledRace
+
+      console.log(raceId)
 
       let subraces = Bg3_Races[rolledRace].subraces
       let rolledSubrace = null
 
-      if (Bg3_Races[rolledRace].subraces) {
+      if (Object.keys(Bg3_Races[rolledRace].subraces).length > 0) {
         let subraceArr = Object.keys(Bg3_Races[rolledRace].subraces) as (keyof typeof subraces)[]
           rolledSubrace = randItem(subraceArr)
-
           raceId = rolledSubrace
-          raceName = Bg3_Races[rolledRace].subraces[rolledSubrace].name
       }
-
 
       let backgrounds = backgroundArr
 
@@ -98,17 +99,21 @@ export function getCharacters (party: PartyMember[])  {
 
       let rolledBackground = randItem(backgrounds)
 
+      const memberObj = party.find(obj => obj.characterId == id)
+
       let memberResult = {
+        ...memberObj,
         raceId: raceId,
-        raceName: raceName,
-        backgroundId: rolledBackground,
-        backgroundName: Bg3_Backgrounds[rolledBackground].name
+        backgroundId: rolledBackground
       }
 
       result.push(memberResult)
     } else {
-      let memberResult = companionBackgrounds[party[i].characterId]
+      let memberObj = party.find(obj => obj.characterId == id)
+      let memberResult = {...memberObj, ...companionBackgrounds[id]}
+
       result.push(memberResult)
     }
   }
+  return result
 }

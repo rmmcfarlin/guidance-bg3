@@ -89,7 +89,7 @@
   --warlock-accent-contrast: #F1E9DA;    /* parchment contrast for text/icons */
   --warlock-accent-hover: #B33A2C;       /* flaring ember */
   --warlock-accent-active: #6F1D15;      /* pressed bloodfire */
-  --warlock-accent-border: #D06A3A;      /* glowing brimstone edge */
+  --warlock-accent-border: #5E1A1A;
   --warlock-accent-ring: #F2A766;        /* infernal aura glow */
   --warlock-accent-muted: #D6A982;       /* ash-tinted ember */
   --warlock-accent-muted-hover: #E7C1A3; /* cooled lava */
@@ -112,6 +112,10 @@
 
   --color-text-primary: var(--color-text-primary);
   --color-text-secondary: var(--color-text-secondary);
+  --color-text-light: var(--color-text-light);
+  --color-text-dark: var(--color-text-dark);
+  --color-text-light-secondary: var(--color-text-light-secondary);
+  --color-text-dark-secondary: var(--color-text-dark-secondary);
 
   --color-background-main: var(--color-background-main);
   --color-background-sidebar-main: var(--color-background-sidebar-main);
@@ -130,7 +134,10 @@
   --color-tab-button-active: var(--color-tab-button-active);
   --color-button-text-dark: var(--color-button-text-dark:);
   --color-bg-menu-dropdown: var(--color-bg-menu-dropdown:);
-  
+  --color-background-char-sheet-primary: var(--color-background-char-sheet-primary);
+  --color-background-char-sheet-secondary: var(--color-background-char-sheet-secondary);
+  --color-accent-border: var(--color-accent-border);
+
 }
 
 /* Main Themes */
@@ -139,6 +146,10 @@
   /* Text */
   --color-text-primary: var(--leather-500);
   --color-text-secondary: var(--leather-300);
+  --color-text-light: var(--parchment-300);
+  --color-text-dark: var(--leather-500);
+  --color-text-light-secondary: var(--parchment-900);
+  --color-text-dark-secondary: var(--leather-300);
 
   /* Background Colors */
 
@@ -148,7 +159,9 @@
   --color-background-generator-primary: var(--parchment-700);
   --color-background-generator-secondary: var(--sand-500);
   --color-bg-menu-dropdown: var(--sand-500);
-  --color-background-portrait: var(--cleric-accent-active);
+  --color-background-portrait: var(--cleric-accent-border);
+  --color-background-char-sheet-primary: var(--leather-500);
+  --color-background-char-sheet-secondary: var(--leather-700);
 
   /* Active States */
   --color-sidebar-button-hover: var(--parchment-100);
@@ -159,6 +172,10 @@
   /* Text */
   --color-text-primary: var(--parchment-300);
   --color-text-secondary: var(--parchment-500);
+  --color-text-light: var(--parchment-300);
+  --color-text-dark: var(--leather-500);
+  --color-text-light-secondary: var(--parchment-900);
+  --color-text-dark-secondary: var(--leather-300);
 
   /* Background Colors */
 
@@ -167,8 +184,10 @@
   --color-background-sidebar-secondary: var(--charcoal-800);
   --color-background-generator-primary: var(--charcoal-500);
   --color-background-generator-secondary: var(--charcoal-700);
-  --color-background-portrait: var(--cleric-accent-active);
+  --color-background-portrait: var(--cleric-accent-border);
   --color-bg-menu-dropdown: var(--charcoal-500);
+  --color-background-char-sheet-primary: var(--leather-500);
+  --color-background-char-sheet-secondary: var(--leather-700);
   
   /* Active States */
   --color-sidebar-button-hover: var(--charcoal-700);
@@ -185,6 +204,7 @@
   --color-button-hover: var(--cleric-accent-hover);
   --color-button-secondary-hover:var(--cleric-accent-muted-hover);
   --color-button-active: var(--cleric-accent-active);
+  --color-accent-border: var(--cleric-accent-border);
 
 }
 
@@ -197,6 +217,7 @@
   --color-button-hover: var(--druid-accent-hover);
   --color-button-secondary-hover:var(--druid-accent-muted-hover);
   --color-button-active: var(--druid-accent-active);
+  --color-accent-border: var(--druid-accent-border);
 
 }
 
@@ -207,9 +228,9 @@
   --color-button-text: var(--sorcerer-accent-contrast);
   --color-button-text-dark: var(--sorcerer-text-dark);
   --color-button-hover: var(--sorcerer-accent-hover);
-  --color-button-secondary-hover:var(--sorcerer-accent-muted-hover);
+  --color-button-secondary-hover: var(--sorcerer-accent-muted-hover);
   --color-button-active: var(--sorcerer-accent-active);
-
+  --color-accent-border: var(--sorcerer-accent-border);
 }
 
 [data-accent-theme="warlock"] {
@@ -221,7 +242,7 @@
   --color-button-hover: var(--warlock-accent-hover);
   --color-button-secondary-hover:var(--warlock-accent-muted-hover);
   --color-button-active: var(--warlock-accent-active);
-
+  --color-accent-border: var(--warlock-accent-border);
 }
 
 [data-accent-theme="wizard"] {
@@ -233,7 +254,7 @@
   --color-button-hover: var(--wizard-accent-hover);
   --color-button-secondary-hover:var(--wizard-accent-muted-hover);
   --color-button-active: var(--wizard-accent-active);
-
+  --color-accent-border: var(--wizard-accent-border);
 }
 
 

@@ -61,7 +61,7 @@ export const PartySelectorSidebar = ({ hasRolled }: PartySelectorSidebarProps) =
     const { partyResult, setPartyResult, tavCounter, setTavCounter, tavIdArr, setTavIdArr } = useGeneratorContext()
     
 
-    const portraitWrapper: string = "w-[50px] lg:w-[75px] p-0.5 bg-background-portrait flex flex-col items-center mb-5"
+    const portraitWrapper: string = "w-[50px] lg:w-[75px] p-0.5 bg-accent-border flex flex-col items-center mb-5"
     const characterPortraitIcon: string = "w-full border-[1px] border-black"
     const removePartymemberButtonClass: string = 'size-full bg-[#8E2A1F] hover:bg-[#B33A2C] text-[#F1E9DA] left-1 p-1 z-10'
     const partyMenuClass: string = `${showPartyDropdown ? '' : 'hidden'} bg-bg-menu-dropdown rounded-xl p-2 max-h-[20rem] overflow-scroll w-40 absolute left-25 z-10`
