@@ -3,7 +3,6 @@ import { type PartyMember } from '../../types/bg3-partymember'
 import { Bg3_Races, type Bg3RaceId, companionBackgrounds } from "../../types/bg3-races"
 import { Bg3_Backgrounds, type Bg3BackgroundId } from "../../types/bg3-backgrounds"
 import { companionNames } from '../../context-providers/generator-provider'
-import { getDisplayName } from '../../global-functions/parse-display-name'
 
 function randItem<T>(arr: readonly T[]): T {
     return arr[Math.floor(Math.random() * arr.length)]

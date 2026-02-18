@@ -149,7 +149,7 @@
   --color-text-light: var(--parchment-300);
   --color-text-dark: var(--leather-500);
   --color-text-light-secondary: var(--parchment-900);
-  --color-text-dark-secondary: var(--leather-300);
+  --color-text-dark-secondary: var(--sand-500);
 
   /* Background Colors */
 
@@ -175,7 +175,7 @@
   --color-text-light: var(--parchment-300);
   --color-text-dark: var(--leather-500);
   --color-text-light-secondary: var(--parchment-900);
-  --color-text-dark-secondary: var(--leather-300);
+  --color-text-dark-secondary: var(--sand-400);
 
   /* Background Colors */
 
