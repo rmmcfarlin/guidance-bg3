@@ -1,8 +1,9 @@
-import { BG3_Classes, type Bg3ClassId } from '../../types/bg3-classes'
+import { BG3_Classes, type Bg3ClassId, type Bg3SubclassId } from '../../types/bg3-classes'
 import { type PartyMember } from '../../types/bg3-partymember'
-import { Bg3_Races, type Bg3RaceId, companionBackgrounds } from "../../types/bg3-races"
+import { Bg3_Races, type Bg3RaceId, type Bg3SubraceId, companionBackgrounds } from "../../types/bg3-races"
 import { Bg3_Backgrounds, type Bg3BackgroundId } from "../../types/bg3-backgrounds"
 import { companionNames } from '../../context-providers/generator-provider'
+import { getRandom } from './party-generator-engine'
 
 function randItem<T>(arr: readonly T[]): T {
     return arr[Math.floor(Math.random() * arr.length)]
@@ -115,4 +116,73 @@ export function getCharacters (party: PartyMember[])  {
     }
   }
   return result
+}
+
+
+
+export function new_getClass(duplicates: boolean, usedClasses: Set<Bg3ClassId>) {
+
+  let availClasses: Bg3ClassId[] = []
+
+  if (!duplicates) {
+    availClasses = classArr.filter(cls => !usedClasses.has(cls))
+  } else if (duplicates) {
+    availClasses = classArr
+  }
+
+  const charClass: Bg3ClassId = getRandom(availClasses)
+
+  const subclassArr = BG3_Classes[charClass].subclasses as (Record<string, { name: string }>)
+  const charSubclass = getRandom(Object.keys(subclassArr))
+
+  return {
+    classId: charClass,
+    className: BG3_Classes[charClass].name,
+    subclassId: charSubclass,
+    subclassName: BG3_Classes[charClass].subclasses[charSubclass].name
+  }
+}
+
+export function new_getRace(memberName: string) {
+
+  const isOrigin: boolean = companionNames.includes(memberName)
+
+  if (isOrigin) {
+    return companionBackgrounds[memberName].raceId
+  } 
+
+  let rolledRace: Bg3RaceId = randItem(raceArr)
+
+  let subraces = Object.keys(Bg3_Races[rolledRace].subraces)
+
+  if (subraces.length > 0) {
+    let subraceArr = subraces as (keyof typeof subraces)[]
+    return randItem(subraceArr)
+  } 
+
+  return rolledRace
+}
+
+            // // Background 
+            
+            //     If party contains the dark urge: 
+            //         filter background array for does not equal "the haunted one"
+            //         return random background from filtered array
+                
+            //     Else return random background from standard background array
+
+            //     Assign to party member object as background id value
+
+export function new_getBackground(memberName: string, hasDurge: boolean) {
+
+  const isOrigin: boolean = companionNames.includes(memberName)
+  let backgrounds: Bg3BackgroundId[] = backgroundArr
+ 
+  if (isOrigin) {
+    return companionBackgrounds[memberName].backgroundId
+  }
+
+  if (hasDurge) {backgrounds = backgroundArr.filter(bkg => bkg !== "haunted-one")}
+
+  return getRandom(backgroundArr)
 }

@@ -23,8 +23,7 @@ export const CharacterGenerator = ({}) => {
     const charSubclassIconClass: string = "w-[200px]"
     const toolbarIconClass: string = "size-[25px]"
     const buttonPrimaryClass: string = "w-40 h-10 bg-button-primary text-button-text rounded-xl text-center text-xl font-bold hover:bg-button-hover mt-5"
-    const buttonSecondaryClass: string = `${hasRolled ? '' : 'hidden'} bg-button-secondary text-button-text-dark rounded-xl hover:bg-button-secondary-hover`
-
+  
     const statsContainerClass: string = "max-w-[100%] min-w-[75%] flex justify-evenly mt-8"
     const statsHeaderClass: string = "text-text-dark-secondary text-l"
     const statsNumberClass: string = "text-text-light text-center"

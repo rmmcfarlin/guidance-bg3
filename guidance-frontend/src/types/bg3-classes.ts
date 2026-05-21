@@ -124,7 +124,7 @@ export const BG3_Classes: Record<string, Class> = {
     }
   } as const
 
-export type Bg3ClassId = keyof typeof BG3_Classes.classes
+export type Bg3ClassId = keyof typeof BG3_Classes
 export type Bg3SubclassId <C extends Bg3ClassId> = keyof typeof BG3_Classes[C]["subclasses"]
 
 export type AllSubclassIds = {
