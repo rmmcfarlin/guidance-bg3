@@ -115,7 +115,7 @@ export const CharacterGenerator = ({}) => {
                         const raceName = getDisplayName(raceId)
                         const backgroundName = getDisplayName(backgroundId)
                         const stats = defaultStats
-                        const skills = placeholderSkills
+                        // const skills = placeholderSkills
 
                         const iconPath = getIcon(subclassId)
                         const useIcon = new URL(`${iconPath}`, import.meta.url).href

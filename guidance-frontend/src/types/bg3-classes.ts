@@ -130,3 +130,4 @@ export type Bg3SubclassId <C extends Bg3ClassId> = keyof typeof BG3_Classes[C]["
 export type AllSubclassIds = {
   [S in Bg3ClassId]: keyof typeof BG3_Classes[S]["subclasses"]
 }[Bg3ClassId]
+

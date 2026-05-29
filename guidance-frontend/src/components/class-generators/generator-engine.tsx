@@ -1,8 +1,9 @@
-import { BG3_Classes, type Bg3ClassId, type Bg3SubclassId } from '../../types/bg3-classes'
+import { BG3_Classes, type Bg3ClassId } from '../../types/bg3-classes'
 import { type PartyMember } from '../../types/bg3-partymember'
-import { Bg3_Races, type Bg3RaceId, type Bg3SubraceId, companionBackgrounds } from "../../types/bg3-races"
+import { Bg3_Races, type Bg3RaceId, companionBackgrounds } from "../../types/bg3-races"
 import { Bg3_Backgrounds, type Bg3BackgroundId } from "../../types/bg3-backgrounds"
 import { companionNames } from '../../context-providers/generator-provider'
+import { type Ability, defaultStats, recommendedStats, recommendedBonuses } from '../../types/bg3-build-info/bg3-stats'
 import { getRandom } from './party-generator-engine'
 
 function randItem<T>(arr: readonly T[]): T {
@@ -13,6 +14,9 @@ const classArr: Bg3ClassId[] = Object.keys(BG3_Classes) as Bg3ClassId[]
 const raceArr: Bg3RaceId[] = Object.keys(Bg3_Races) as Bg3RaceId[]
 const backgroundArr: Bg3BackgroundId[] = Object.keys(Bg3_Backgrounds) as Bg3BackgroundId[]
 
+export function getKeys<T extends object>(obj: T): (keyof T)[] {
+  return Object.keys(obj) as (keyof T)[]
+}
 
 export function getClass() {
   const rolledClass = randItem(classArr)
@@ -118,8 +122,7 @@ export function getCharacters (party: PartyMember[])  {
   return result
 }
 
-
-
+// Class & Subclass
 export function new_getClass(duplicates: boolean, usedClasses: Set<Bg3ClassId>) {
 
   let availClasses: Bg3ClassId[] = []
@@ -143,6 +146,7 @@ export function new_getClass(duplicates: boolean, usedClasses: Set<Bg3ClassId>) 
   }
 }
 
+// Race
 export function new_getRace(memberName: string) {
 
   const isOrigin: boolean = companionNames.includes(memberName)
@@ -163,16 +167,7 @@ export function new_getRace(memberName: string) {
   return rolledRace
 }
 
-            // // Background 
-            
-            //     If party contains the dark urge: 
-            //         filter background array for does not equal "the haunted one"
-            //         return random background from filtered array
-                
-            //     Else return random background from standard background array
-
-            //     Assign to party member object as background id value
-
+// Ability Stats
 export function new_getBackground(memberName: string, hasDurge: boolean) {
 
   const isOrigin: boolean = companionNames.includes(memberName)
@@ -184,5 +179,75 @@ export function new_getBackground(memberName: string, hasDurge: boolean) {
 
   if (hasDurge) {backgrounds = backgroundArr.filter(bkg => bkg !== "haunted-one")}
 
-  return getRandom(backgroundArr)
+  return getRandom(backgrounds)
 }
+
+export function getStats(useRecommended: boolean, cls: Bg3ClassId) {
+
+  if (useRecommended) {
+    return {
+      stats: recommendedStats[cls],
+      plusOne: recommendedBonuses[cls].plusOne,
+      plusTwo: recommendedBonuses[cls].plusTwo
+    }
+  }
+
+  let statRange: number[] = [1, 2, 3, 4, 5, 6, 7]
+  const stats: Ability[] = getKeys(defaultStats)
+
+  let statPool: number = 27
+  let statPointer: number = 0
+  let statResults = {...defaultStats}
+
+  while (statPool > 0) {
+    if (statPool < 7) {
+      statRange = statRange.filter(num => num <= statPool)
+      console.log(statRange)
+    }
+
+    let roll = getRandom(statRange)
+
+    let totalPoints = 0
+
+    while (roll > 0) {
+
+      if (statResults[stats[statPointer]] >= 13 && statPool < 2) {
+        continue
+      } else if (statResults[stats[statPointer]] >= 13 && statResults[stats[statPointer]] != 15) {
+        ++statResults[stats[statPointer]]
+        roll -= 2
+        totalPoints += 2
+      } else if (statResults[stats[statPointer]] == 15) {
+        roll = 0
+      } else {
+        ++statResults[stats[statPointer]]
+        --roll
+        ++totalPoints
+      }
+    }
+    statPool -= totalPoints
+
+    if (statPointer == 5) {
+      statPointer = 0
+    } else {
+      ++statPointer
+    }
+  }
+  const plusTwo: Ability = getRandom(stats)
+  let filtered = stats.filter(abil => abil != plusTwo)
+  const plusOne: Ability = getRandom(filtered)
+
+  statResults[plusTwo] += 2
+  statResults[plusOne] += 1
+
+  return {
+    stats: statResults,
+    plusOne: plusOne,
+    plusTwo: plusTwo
+  }
+}
+
+// Skill Proficiencies
+
+// Weapon Proficiencies
+

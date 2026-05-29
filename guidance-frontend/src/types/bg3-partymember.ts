@@ -4,7 +4,7 @@ import { type Bg3BackgroundId } from "./bg3-backgrounds"
 import { type Weapons } from "./bg3-build-info/bg3-weapons/bg3-weapons"
 import { type Gear } from "./bg3-build-info/bg3-gear/bg3-gear"
 import { type Jewelry } from "./bg3-build-info/bg3-jewelry/bg3-jewelry"
-import { type AbilityStats } from "./bg3-build-info/bg3-stats"
+import { type AbilityStats, type BonusObject} from "./bg3-build-info/bg3-stats"
 import { type Bg3SkillObject } from "./bg3-build-info/bg3-skills"
 import { type Bg3SpellId } from "./bg3-build-info/bg3-spells/bg3-spells"
 
@@ -29,6 +29,7 @@ weapons?: Weapons
 gear?: Gear	
 jewelry?: Jewelry
 stats?: AbilityStats
+bonuses?: BonusObject
 	
 skills?: Bg3SkillObject[]	
 spells?: Bg3SpellId[]
